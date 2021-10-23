@@ -1,18 +1,17 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
-  </div>
+  <p>{{ bienvenida }}</p>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+<script>
+export default {
+  name: "Home",
 
-export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
+  data: function() {
+    return {
+      bienvenida: "Bienvenid@ a MedSource",
+    };
   },
-});
+};
 </script>
+
+<style></style>
