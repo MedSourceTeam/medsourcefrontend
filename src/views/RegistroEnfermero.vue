@@ -5,28 +5,28 @@
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
           <label for="">Correo Electronico</label>
-          <input type="email" v-model="medico.user.username" />
+          <input type="email" v-model="enfermero.user.username" />
         </div>
         <div class="form-group text-left">
           <label for="">Contraseña</label>
-          <input type="password" v-model="medico.user.password" />
+          <input type="password" v-model="enfermero.user.password" />
         </div>
 
         <div class="form-group text-left">
           <label for="">Nombres</label>
-          <input type="text" v-model="medico.user.first_name" />
+          <input type="text" v-model="enfermero.user.first_name" />
         </div>
         <div class="form-group text-left">
           <label for="">Apellidos</label>
-          <input type="text" v-model="medico.user.last_name" />
+          <input type="text" v-model="enfermero.user.last_name" />
         </div>
         <div class="form-group text-left">
           <label for="">Numero de Documento</label>
-          <input type="number" v-model="medico.identification" />
+          <input type="number" v-model="enfermero.identification" />
         </div>
         <div class="form-group text-left">
           <label for="">Nivel Educativo</label>
-          <select v-model="medico.education">
+          <select v-model="enfermero.education">
             <option disabled value="">Seleccione un elemento</option>
             <option v-for="nivel in nivelesEducativos" :key="nivel">{{
               nivel
@@ -34,12 +34,12 @@
           </select>
         </div>
         <div class="form-group text-left">
-          <label for="">Especialización</label>
-          <input type="text" v-model="medico.specialization" />
+          <label for="">Area</label>
+          <input type="text" v-model="enfermero.area" />
         </div>
         <div class="form-group text-left">
           <label for="">Hospital</label>
-          <select v-model="medico.idHospital">
+          <select v-model="enfermero.idHospital">
             <option disabled value="">Seleccione un elemento</option>
             <option
               v-for="hospital in hospitales"
@@ -62,11 +62,11 @@
 import axios from "axios";
 
 export default {
-  name: "RegistroMedico",
+  name: "RegistroEnfermero",
 
   data: function() {
     return {
-      medico: {
+      enfermero: {
         user: {
           username: "",
           email: "",
@@ -76,7 +76,7 @@ export default {
         },
         identification: "",
         education: null,
-        specialization: "",
+        area: "",
         idHospital: null,
       },
       nivelesEducativos: [
@@ -96,9 +96,9 @@ export default {
       this.$router.push({ name: "home" });
     },
     processSignUp: function() {
-      this.medico.user.email = this.medico.user.username;
+      this.enfermero.user.email = this.enfermero.user.username;
       axios
-        .post("http://127.0.0.1:8000/medico/registro", this.medico)
+        .post("http://127.0.0.1:8000/enfermero/registro", this.enfermero)
         .then((result) => {
           alert("Registro Exitoso");
           this.backLogin();
