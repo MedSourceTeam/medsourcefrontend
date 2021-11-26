@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Home from "./views/Home.vue";
 import RegistroMedico from "./views/RegistroMedico.vue";
 import RegistroEnfermero from "./views/RegistroEnfermero.vue";
+import RegistroDesarrolloProcedimiento from "./views/RegistroDesarrolloProcedimiento.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,6 +29,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/registro/enfermero",
     name: "enfermeroregistro",
     component: RegistroEnfermero,
+  },
+  {
+    path: "/registro/desarrollo",
+    name: "desarrolloregistro",
+    component: RegistroDesarrolloProcedimiento,
   },
 ];
 
