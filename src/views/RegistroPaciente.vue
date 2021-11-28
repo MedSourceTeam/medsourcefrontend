@@ -102,7 +102,7 @@ export default {
     },
     processSignUp: function() {
       axios
-        .post("http://127.0.0.1:8000/paciente/registro", this.patient)
+        .post(this.$store.state.backURL + "/paciente/registro", this.patient)
         .then((result) => {
           alert("Paciente Registrado con Éxito");
           this.goBackHome();
@@ -115,7 +115,7 @@ export default {
 
     getEPSs: function() {
       axios
-        .get("http://127.0.0.1:8000/eps")
+        .get(this.$store.state.backURL + "/eps")
         .then((response) => {
           this.EPSs = response.data;
         })
