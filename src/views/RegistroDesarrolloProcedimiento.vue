@@ -2,10 +2,11 @@
   <div class="container text-center">
     <div class="col col-11 col-md-6">
       <h2>Registro Procedimiento</h2>
-      <p v-if="result">Errror:, server returned:<br> {{result}}</p>
+      <p v-if="result">
+        Errror:, server returned:<br />
+        {{ result }}
+      </p>
       <form v-on:submit.prevent="processSignUp">
-
-
         <div class="form-group text-left">
           <label for="">Fecha</label>
           <input type="date" v-model="procedimiento.date" />
@@ -27,7 +28,7 @@
           <input type="number" v-model="procedimiento.room" />
         </div>
         <div class="form-group text-left">
-          <label for="">Procedimiento</label><br>
+          <label for="">Procedimiento</label><br />
           <select v-model="procedimiento.id_procedure">
             <option disabled value="">Seleccione un elemento</option>
             <option
@@ -39,7 +40,7 @@
           </select>
         </div>
         <div class="form-group text-left">
-          <label for="">Hospital</label><br>
+          <label for="">Hospital</label><br />
           <select v-model="procedimiento.id_hospital">
             <option disabled value="">Seleccione un elemento</option>
             <option
@@ -51,10 +52,14 @@
           </select>
         </div>
         <div class="form-group text-left">
-          <label for="">Comentario</label><br>
-          <textarea v-model="procedimiento.comment">Enter text here...</textarea>
+          <label for="">Comentario</label><br />
+          <textarea v-model="procedimiento.comment">
+Enter text here...</textarea
+          >
         </div>
-        <button type="submit" class="btn btn-primary" v-on:click="registro">Registrar</button>
+        <button type="submit" class="btn btn-primary" v-on:click="registro">
+          Registrar
+        </button>
         <button type="button" class="btn btn-primary" v-on:click="backLogin">
           Volver
         </button>
@@ -80,7 +85,6 @@ export default {
         identification_doctor: null,
         id_procedure: null,
         comment: "",
-
       },
       procedimientos: [],
       hospitales: [],
@@ -94,9 +98,12 @@ export default {
       this.$router.push({ name: "home" });
     },
     registro: function() {
-        console.log(this.procedimiento)
+      console.log(this.procedimiento);
       axios
-        .post("http://127.0.0.1:8000/desarrollo/ingreso", this.procedimiento)
+        .post(
+          this.$store.state.backURL + "/desarrollo/ingreso",
+          this.procedimiento
+        )
         .then((result) => {
           alert("Registro Exitoso");
           this.backLogin();
@@ -110,7 +117,7 @@ export default {
 
     getProcedimientos: function() {
       axios
-        .get("http://127.0.0.1:8000/procedimientos/")
+        .get(this.$store.state.backURL + "/procedimientos/")
         .then((response) => {
           this.procedimientos = response.data;
         })
@@ -121,7 +128,7 @@ export default {
     },
     getHospitales: function() {
       axios
-        .get("http://127.0.0.1:8000/hospital")
+        .get(this.$store.state.backURL + "/hospital")
         .then((response) => {
           this.hospitales = response.data;
         })

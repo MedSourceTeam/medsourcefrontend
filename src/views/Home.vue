@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { renewToken } from "@/services/token";
 export default {
   name: "Home",
 
@@ -10,6 +11,10 @@ export default {
     return {
       bienvenida: "Bienvenid@ a MedSource",
     };
+  },
+
+  created: function() {
+    renewToken();
   },
 };
 </script>

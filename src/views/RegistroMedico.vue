@@ -92,13 +92,12 @@ export default {
 
   methods: {
     backLogin: function() {
-      //TODO: cambiar cuando exista login
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: "login" });
     },
     processSignUp: function() {
       this.medico.user.email = this.medico.user.username;
       axios
-        .post("http://127.0.0.1:8000/medico/registro", this.medico)
+        .post(this.$store.state.backURL + "/medico/registro", this.medico)
         .then((result) => {
           alert("Registro Exitoso");
           this.backLogin();
@@ -111,7 +110,7 @@ export default {
 
     getHospitales: function() {
       axios
-        .get("http://127.0.0.1:8000/hospital")
+        .get(this.$store.state.backURL + "/hospital")
         .then((response) => {
           this.hospitales = response.data;
         })

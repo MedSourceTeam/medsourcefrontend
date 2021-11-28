@@ -4,12 +4,34 @@ import RegistroMedico from "./views/RegistroMedico.vue";
 import RegistroEnfermero from "./views/RegistroEnfermero.vue";
 import RegistroDesarrolloProcedimiento from "./views/RegistroDesarrolloProcedimiento.vue";
 import RegistroPaciente from "./views/RegistroPaciente.vue";
+import Login from "./views/Login.vue";
+import RecuperarContrasena from "./views/RecuperarContrasena.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
+    name: "root",
+    redirect: "login",
+  },
+  {
+    path: "/home",
     name: "home",
     component: Home,
+  },
+  {
+    path: "/login",
+    name: "login",
+    component: Login,
+  },
+  {
+    path: "/recuperarcontrasena/:token",
+    name: "cambioContrasena",
+    component: RecuperarContrasena,
+  },
+  {
+    path: "/recuperarcontrasena",
+    name: "cambioContrasenaEmail",
+    component: RecuperarContrasena,
   },
   {
     path: "/medico",
