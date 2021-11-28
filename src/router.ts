@@ -3,6 +3,7 @@ import Home from "./views/Home.vue";
 import RegistroMedico from "./views/RegistroMedico.vue";
 import RegistroEnfermero from "./views/RegistroEnfermero.vue";
 import RegistroDesarrolloProcedimiento from "./views/RegistroDesarrolloProcedimiento.vue";
+import RegistroPaciente from "./views/RegistroPaciente.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -34,7 +35,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/registro/desarrollo",
     name: "desarrolloregistro",
     component: RegistroDesarrolloProcedimiento,
-  },
+   },
+   {
+    path: "/paciente/registro",
+    name: "pacienteregistro",
+    component: RegistroPaciente,
+   },
 ];
 
 const router = createRouter({
