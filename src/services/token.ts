@@ -1,6 +1,6 @@
 const tokenAccess = "token-access";
 const tokenRefresh = "token-refresh";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 export function getAuthenticationToken() {
   return localStorage.getItem(tokenAccess);
@@ -20,7 +20,7 @@ export function setRefreshToken(token = "") {
 
 export function renewToken() {
   axios
-    .post("http://127.0.0.1:8000/refresh", {
+    .post<Token>("http://127.0.0.1:8000/refresh", {
       refresh: getRefreshToken(),
     })
     .then((result) => {
@@ -29,4 +29,8 @@ export function renewToken() {
     .catch((error) => {
       console.log(error);
     });
+}
+
+interface Token {
+  access: string;
 }
