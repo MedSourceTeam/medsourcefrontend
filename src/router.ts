@@ -4,6 +4,7 @@ import RegistroMedico from "./views/RegistroMedico.vue";
 import RegistroEnfermero from "./views/RegistroEnfermero.vue";
 import RegistroDesarrolloProcedimiento from "./views/RegistroDesarrolloProcedimiento.vue";
 import RegistroPaciente from "./views/RegistroPaciente.vue";
+import RegistroConsulta from "./views/RegistroConsulta.vue";
 import Login from "./views/Login.vue";
 import RecuperarContrasena from "./views/RecuperarContrasena.vue";
 import RegistroProcedimiento from "./views/RegistroProcedimiento.vue";
@@ -81,6 +82,11 @@ const routes: Array<RouteRecordRaw> = [
     name: "antecedentevinculacion",
     component: VinculacionAntecedente,
    },
+   {
+    path: "/registro/consulta",
+    name: "consultaregistro",
+    component: RegistroConsulta,
+    },
 ];
 
 const router = createRouter({
