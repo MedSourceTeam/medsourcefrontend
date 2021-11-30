@@ -33,7 +33,7 @@
 import axios from "axios";
 
 export default {
-  name: "RegistroAntecedente",
+  name: "VinculacionAntecedente",
   data: function() {
     return {
         paciente_antecedente: {
@@ -50,7 +50,7 @@ export default {
     },
     processSignUp: function() {
       axios
-        .post(this.$store.state.backURL + "/paciente_antecedente/registro", this.patient_record)
+        .post(this.$store.state.backURL + "/vinculacion_antecedente/ingreso", this.patient_record)
         .then((result) => {
           alert("Antecedente vinculado con �xito");
           this.goBackHome();

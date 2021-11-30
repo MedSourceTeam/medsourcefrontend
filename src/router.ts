@@ -7,6 +7,8 @@ import RegistroPaciente from "./views/RegistroPaciente.vue";
 import Login from "./views/Login.vue";
 import RecuperarContrasena from "./views/RecuperarContrasena.vue";
 import RegistroProcedimiento from "./views/RegistroProcedimiento.vue";
+import RegistroAntecedente from "./views/RegistroAntecedente.vue";
+import VinculacionAntecedente from "./views/RegistroPacienteAntecedente.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -60,9 +62,24 @@ const routes: Array<RouteRecordRaw> = [
     component: RegistroDesarrolloProcedimiento,
    },
    {
-    path: "/paciente/registro",
+    path: "/registro/paciente",
     name: "pacienteregistro",
     component: RegistroPaciente,
+   },
+   {
+    path: "/registro/procedimiento",
+    name: "procedimientoregistro",
+    component: RegistroProcedimiento,
+   },
+   {
+    path: "/registro/antecedente",
+    name: "antecedenteregistro",
+    component: RegistroAntecedente,
+   },
+   {
+    path: "/vinculacion/antecedente",
+    name: "antecedentevinculacion",
+    component: VinculacionAntecedente,
    },
 ];
 

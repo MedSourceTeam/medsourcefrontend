@@ -57,7 +57,7 @@ export default {
     },
     processSignUp: function() {
       axios
-        .post(this.$store.state.backURL + "/antecedente/registro", this.record)
+        .post(this.$store.state.backURL + "/antecedente/ingreso", this.record)
         .then((result) => {
           alert("Antecedente Registrado con �xito");
           this.goBackHome();

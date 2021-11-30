@@ -4,7 +4,7 @@
             <h2>Registrar Paciente</h2>
             <form v-on:submit.prevent="processSignUp">
                 <div class="form-group text-left">
-                    <label for="">Número de Identificación</label>
+                    <label for="">Nï¿½mero de Identificaciï¿½n</label>
                     <input type="number" v-model="patient.identification" />
                 </div>
                 <div class="form-group text-left">
@@ -16,7 +16,7 @@
                     <input type="date" v-model="patient.date_of_birth" />
                 </div>
                 <div class="form-group text-left">
-                    <label for="">Número de Teléfono</label>
+                    <label for="">Nï¿½mero de Telï¿½fono</label>
                     <input type="number" v-model="patient.phone" />
                 </div>
                 <div class="form-group text-left">
@@ -31,9 +31,9 @@
                     </select>
                 </div>
                 <div class="form-group text-left">
-                    <label for="">Grupo Sanguíneo</label>
+                    <label for="">Grupo Sanguï¿½neo</label>
                     <select v-model="patient.marital_status">
-                        <option disabled value="">Seleccione un Grupo Sanguíneo</option>
+                        <option disabled value="">Seleccione un Grupo Sanguï¿½neo</option>
                         <option v-for="bloodType in bloodTypesArray" :key="bloodType">
                             {{
                                 bloodType
@@ -78,7 +78,7 @@ export default {
         maritalStatusArray: [
             "Soltero",
             "Casado",
-            "Unión Libre",
+            "Uniï¿½n Libre",
             "Viudo",
             "Divorciado",
         ],
@@ -102,9 +102,9 @@ export default {
     },
     processSignUp: function() {
       axios
-        .post(this.$store.state.backURL + "/paciente/registro", this.patient)
+        .post(this.$store.state.backURL + "/paciente/ingreso", this.patient)
         .then((result) => {
-          alert("Paciente Registrado con Éxito");
+          alert("Paciente Registrado con ï¿½xito");
           this.goBackHome();
         })
         .catch((error) => {
