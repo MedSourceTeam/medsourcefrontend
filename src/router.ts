@@ -6,6 +6,7 @@ import RegistroDesarrolloProcedimiento from "./views/RegistroDesarrolloProcedimi
 import RegistroPaciente from "./views/RegistroPaciente.vue";
 import Login from "./views/Login.vue";
 import RecuperarContrasena from "./views/RecuperarContrasena.vue";
+import RegistroProcedimiento from "./views/RegistroProcedimiento.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
