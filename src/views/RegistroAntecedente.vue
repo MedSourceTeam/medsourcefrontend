@@ -42,7 +42,7 @@ export default {
             name: "",
             sort: "",
         },
-        kind: [
+        kindsArray: [
             "Personal",
             "Gineco-Obstetricos",
             "Psicosociales",

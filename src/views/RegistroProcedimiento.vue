@@ -6,12 +6,12 @@
                 
                 <div class="form-group text-left">
                     <label for="">Nombre del Procedimiento</label>
-                    <input type="text" v-model="patient.name" />
+                    <input type="text" v-model="procedure.name" />
                 </div>
 
                 <div class="form-group text-left">
                     <label for="">Unidad de Valor Relativa</label>
-                    <input type="number" v-model="paciente_antecedente.identification_patient" />
+                    <input type="number" v-model="procedure.uvr" />
                 </div>
 
                 <button type="submit" class="btn btn-primary">Registrar Procedimiento</button>
@@ -32,7 +32,7 @@ export default {
   name: "RegistroProcedimiento",
   data: function() {
     return {
-        paciente_procedimiento: {
+        procedure: {
             name: "",
             uvr: null,
         }
@@ -45,7 +45,7 @@ export default {
     },
     processSignUp: function() {
       axios
-        .post(this.$store.state.backURL + "/procedimiento/registro", this.procedure_record)
+        .post(this.$store.state.backURL + "/procedimiento/ingreso", this.procedure)
         .then((result) => {
           alert("Procedimiento Registrado con �xito");
           this.goBackHome();
