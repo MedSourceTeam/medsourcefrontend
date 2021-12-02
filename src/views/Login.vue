@@ -42,6 +42,7 @@ export default {
         .then((result) => {
           setAuthenticationToken(result.data.access);
           setRefreshToken(result.data.refresh);
+          this.$store.commit("login");
           this.$router.push({ name: "home" });
         })
         .catch((error) => {

@@ -40,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/medico",
     name: "medico",
-    component: Home,
+    redirect: "home",
   },
   {
     path: "/registro/medico",
@@ -50,7 +50,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/enfermero",
     name: "enfermero",
-    component: Home,
+    redirect: "home",
   },
   {
     path: "/registro/enfermero",
@@ -61,32 +61,32 @@ const routes: Array<RouteRecordRaw> = [
     path: "/registro/desarrollo",
     name: "desarrolloregistro",
     component: RegistroDesarrolloProcedimiento,
-   },
-   {
+  },
+  {
     path: "/registro/paciente",
     name: "pacienteregistro",
     component: RegistroPaciente,
-   },
-   {
+  },
+  {
     path: "/registro/procedimiento",
     name: "procedimientoregistro",
     component: RegistroProcedimiento,
-   },
-   {
+  },
+  {
     path: "/registro/antecedente",
     name: "antecedenteregistro",
     component: RegistroAntecedente,
-   },
-   {
+  },
+  {
     path: "/vinculacion/antecedente",
     name: "antecedentevinculacion",
     component: VinculacionAntecedente,
-   },
-   {
+  },
+  {
     path: "/registro/consulta",
     name: "consultaregistro",
     component: RegistroConsulta,
-    },
+  },
 ];
 
 const router = createRouter({
