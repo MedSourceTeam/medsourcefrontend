@@ -5,27 +5,43 @@
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
           <label for="">Numero de Documento del Paciente</label>
-          <input type="number" v-model="paciente_antecedente.idPatient" />
+          <input
+            type="number"
+            v-model="paciente_antecedente.idPatient"
+            :disabled="validPatient"
+          />
         </div>
-
-        <div class="form-group text-left">
-          <label for="">Antecedente</label>
-          <select v-model="paciente_antecedente.idRecord">
-            <option disabled value="">Seleccione un elemento</option>
-            <option
-              v-for="antecedente in antecedentes"
-              :key="antecedente"
-              :value="antecedente.id"
-              >{{ antecedente.name }}</option
-            >
-          </select>
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-if="!validPatient"
+          v-on:click="searchPatient"
+        >
+          Buscar paciente
+        </button>
+        <p v-if="validPatient">
+          <strong>Paciente: </strong> {{ patient.full_name }}
+        </p>
+        <div v-if="validPatient">
+          <div class="form-group text-left">
+            <label for="">Antecedente</label>
+            <select v-model="paciente_antecedente.idRecord">
+              <option disabled value="">Seleccione un elemento</option>
+              <option
+                v-for="antecedente in antecedentes"
+                :key="antecedente"
+                :value="antecedente.id"
+                >{{ antecedente.name }}</option
+              >
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Vincular Antecedente con Paciente
+          </button>
+          <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+            Volver
+          </button>
         </div>
-        <button type="submit" class="btn btn-primary">
-          Vincular Antecedente con Paciente
-        </button>
-        <button type="button" class="btn btn-primary" v-on:click="goBackHome">
-          Volver
-        </button>
       </form>
     </div>
   </div>
@@ -38,6 +54,8 @@ export default {
   name: "VinculacionAntecedente",
   data: function() {
     return {
+      patient: null,
+      validPatient: false,
       paciente_antecedente: {
         idPatient: null,
         idRecord: null,
@@ -50,19 +68,20 @@ export default {
       this.$router.push({ name: "home" });
     },
     processSignUp: function() {
-      axios
-        .post(
-          this.$store.state.backURL + "/vinculacion_antecedente/ingreso",
-          this.paciente_antecedente
-        )
-        .then((result) => {
-          alert("Antecedente vinculado con �xito");
-          this.goBackHome();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo durante la vinculación del antecedente");
-        });
+      if (this.validPatient)
+        axios
+          .post(
+            this.$store.state.backURL + "/vinculacion_antecedente/ingreso",
+            this.paciente_antecedente
+          )
+          .then((result) => {
+            alert("Antecedente vinculado con éxito");
+            this.goBackHome();
+          })
+          .catch((error) => {
+            console.log(error.response);
+            alert("ERROR: Fallo durante la vinculación del antecedente");
+          });
     },
 
     getAntecedentes: function() {
@@ -74,6 +93,26 @@ export default {
         .catch((error) => {
           console.log(error.response);
           alert("ERROR: Fallo al obtener antecedentes");
+        });
+    },
+
+    searchPatient: function() {
+      axios
+        .get(
+          this.$store.state.backURL +
+            "/paciente/" +
+            this.paciente_antecedente.idPatient
+        )
+        .then((response) => {
+          this.patient = response.data;
+          this.validPatient = true;
+        })
+        .catch((error) => {
+          if (error.response.status == 404)
+            alert(
+              "El paciente ingresado no se encuentra registrado en el sistema"
+            );
+          else alert("Se presento un error al buscar el paciente");
         });
     },
   },

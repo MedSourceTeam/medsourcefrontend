@@ -8,61 +8,110 @@
       </p>
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
-          <label for="">Fecha</label>
-          <input type="date" v-model="procedimiento.date" />
-        </div>
-        <div class="form-group text-left">
           <label for="">Numero de Documento del Paciente</label>
-          <input type="number" v-model="procedimiento.identification_patient" />
+          <input
+            type="number"
+            :disabled="validPatient"
+            v-model="procedimiento.identification_patient"
+          />
         </div>
-        <div class="form-group text-left">
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-if="!validPatient"
+          v-on:click="searchPatient"
+        >
+          Buscar paciente
+        </button>
+        <p v-if="validPatient">
+          <strong>Paciente: </strong> {{ patient.full_name }}
+        </p>
+        <div class="form-group text-left" v-if="validPatient">
           <label for="">Numero de Documento del Doctor</label>
-          <input type="number" v-model="procedimiento.identification_doctor" />
+          <input
+            type="number"
+            :disabled="validDoctor"
+            v-model="procedimiento.identification_doctor"
+          />
         </div>
-        <div class="form-group text-left">
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-if="validPatient && !validDoctor"
+          v-on:click="searchDoctor"
+        >
+          Buscar doctor
+        </button>
+        <p v-if="validDoctor">
+          <strong>Medico: </strong>
+          {{ doctor.user.first_name + " " + doctor.user.last_name }}
+        </p>
+        <div class="form-group text-left" v-if="validPatient && validDoctor">
           <label for="">Numero de Documento de la Enfermera</label>
-          <input type="number" v-model="procedimiento.identification_nurse" />
+          <input
+            type="number"
+            v-model="procedimiento.identification_nurse"
+            :disabled="validNurse"
+          />
         </div>
-        <div class="form-group text-left">
-          <label for="">Sala</label>
-          <input type="number" v-model="procedimiento.room" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Procedimiento</label><br />
-          <select v-model="procedimiento.id_procedure">
-            <option disabled value="">Seleccione un elemento</option>
-            <option
-              v-for="procedimiento in procedimientos"
-              :key="procedimiento"
-              :value="procedimiento.id"
-              >{{ procedimiento.name }}</option
-            >
-          </select>
-        </div>
-        <div class="form-group text-left">
-          <label for="">Hospital</label><br />
-          <select v-model="procedimiento.id_hospital">
-            <option disabled value="">Seleccione un elemento</option>
-            <option
-              v-for="hospital in hospitales"
-              :key="hospital"
-              :value="hospital.id"
-              >{{ hospital.name }}</option
-            >
-          </select>
-        </div>
-        <div class="form-group text-left">
-          <label for="">Comentario</label><br />
-          <textarea v-model="procedimiento.comment">
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-if="validPatient && validDoctor && !validNurse"
+          v-on:click="searchNurse"
+        >
+          Buscar Enfermera/o
+        </button>
+        <p v-if="validNurse">
+          <strong>Enfermera/o: </strong>
+          {{ nurse.user.first_name + " " + nurse.user.last_name }}
+        </p>
+        <div v-if="validPatient && validDoctor && validNurse">
+          <div class="form-group text-left">
+            <label for="">Fecha</label>
+            <input type="date" v-model="procedimiento.date" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">Sala</label>
+            <input type="number" v-model="procedimiento.room" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">Procedimiento</label><br />
+            <select v-model="procedimiento.id_procedure">
+              <option disabled value="">Seleccione un elemento</option>
+              <option
+                v-for="procedimiento in procedimientos"
+                :key="procedimiento"
+                :value="procedimiento.id"
+                >{{ procedimiento.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group text-left">
+            <label for="">Hospital</label><br />
+            <select v-model="procedimiento.id_hospital">
+              <option disabled value="">Seleccione un elemento</option>
+              <option
+                v-for="hospital in hospitales"
+                :key="hospital"
+                :value="hospital.id"
+                >{{ hospital.name }}</option
+              >
+            </select>
+          </div>
+          <div class="form-group text-left">
+            <label for="">Comentario</label><br />
+            <textarea v-model="procedimiento.comment">
 Enter text here...</textarea
-          >
+            >
+          </div>
+          <button type="submit" class="btn btn-primary" v-on:click="registro">
+            Registrar
+          </button>
+          <button type="button" class="btn btn-primary" v-on:click="backLogin">
+            Volver
+          </button>
         </div>
-        <button type="submit" class="btn btn-primary" v-on:click="registro">
-          Registrar
-        </button>
-        <button type="button" class="btn btn-primary" v-on:click="backLogin">
-          Volver
-        </button>
       </form>
     </div>
   </div>
@@ -76,6 +125,12 @@ export default {
 
   data: function() {
     return {
+      doctor: null,
+      patient: null,
+      nurse: null,
+      validPatient: false,
+      validDoctor: false,
+      validNurse: false,
       procedimiento: {
         room: null,
         date: null,
@@ -94,25 +149,25 @@ export default {
 
   methods: {
     backLogin: function() {
-      //TODO: cambiar cuando exista login
       this.$router.push({ name: "home" });
     },
     registro: function() {
       console.log(this.procedimiento);
-      axios
-        .post(
-          this.$store.state.backURL + "/desarrollo/ingreso",
-          this.procedimiento
-        )
-        .then((result) => {
-          alert("Registro Exitoso");
-          this.backLogin();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          this.result = error.response.data;
-          alert("ERROR: Fallo en el registro.");
-        });
+      if (this.validPatient && this.validDoctor && this.validNurse)
+        axios
+          .post(
+            this.$store.state.backURL + "/desarrollo/ingreso",
+            this.procedimiento
+          )
+          .then((result) => {
+            alert("Registro Exitoso");
+            this.backLogin();
+          })
+          .catch((error) => {
+            console.log(error.response);
+            this.result = error.response.data;
+            alert("ERROR: Fallo en el registro.");
+          });
     },
 
     getProcedimientos: function() {
@@ -135,6 +190,66 @@ export default {
         .catch((error) => {
           console.log(error.response);
           alert("ERROR: Fallo al obtener hospitales");
+        });
+    },
+
+    searchPatient: function() {
+      axios
+        .get(
+          this.$store.state.backURL +
+            "/paciente/" +
+            this.procedimiento.identification_patient
+        )
+        .then((response) => {
+          this.patient = response.data;
+          this.validPatient = true;
+        })
+        .catch((error) => {
+          if (error.response.status == 404)
+            alert(
+              "El paciente ingresado no se encuentra registrado en el sistema"
+            );
+          else alert("Se presento un error al buscar el paciente");
+        });
+    },
+
+    searchDoctor: function() {
+      axios
+        .get(
+          this.$store.state.backURL +
+            "/doctor/" +
+            this.procedimiento.identification_doctor
+        )
+        .then((response) => {
+          this.doctor = response.data;
+          this.validDoctor = true;
+        })
+        .catch((error) => {
+          if (error.response.status == 404)
+            alert(
+              "El doctor ingresado no se encuentra registrado en el sistema"
+            );
+          else alert("Se presento un error al buscar el doctor");
+        });
+    },
+
+    searchNurse: function() {
+      axios
+        .get(
+          this.$store.state.backURL +
+            "/enfermero/" +
+            this.procedimiento.identification_nurse
+        )
+        .then((response) => {
+          this.nurse = response.data;
+          this.validNurse = true;
+        })
+        .catch((error) => {
+          if (error.response.status == 404)
+            alert(
+              "El enfermero/a ingresado no se encuentra registrado en el sistema"
+            );
+          else alert("Se presento un error al buscar el enfermero/a");
         });
     },
   },

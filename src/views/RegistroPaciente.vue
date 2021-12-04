@@ -4,7 +4,7 @@
       <h2>Registrar Paciente</h2>
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
-          <label for="">N�mero de Identificaci�n</label>
+          <label for="">Número de Identificación</label>
           <input type="number" v-model="patient.identification" />
         </div>
         <div class="form-group text-left">
@@ -16,7 +16,7 @@
           <input type="date" v-model="patient.date_of_birth" />
         </div>
         <div class="form-group text-left">
-          <label for="">N�mero de Tel�fono</label>
+          <label for="">Número de Teléfono</label>
           <input type="number" v-model="patient.phone" />
         </div>
         <div class="form-group text-left">
@@ -32,9 +32,9 @@
           </select>
         </div>
         <div class="form-group text-left">
-          <label for="">Grupo Sangu�neo</label>
+          <label for="">Grupo Sanguíneo</label>
           <select v-model="patient.blood_type">
-            <option disabled value="">Seleccione un Grupo Sangu�neo</option>
+            <option disabled value="">Seleccione un Grupo Sanguíneo</option>
             <option v-for="bloodType in bloodTypesArray" :key="bloodType">
               {{ bloodType }}
             </option>
@@ -79,7 +79,7 @@ export default {
       maritalStatusArray: [
         "Soltero",
         "Casado",
-        "Uni�n Libre",
+        "Unión Libre",
         "Viudo",
         "Divorciado",
       ],
@@ -95,7 +95,7 @@ export default {
       axios
         .post(this.$store.state.backURL + "/paciente/ingreso", this.patient)
         .then((result) => {
-          alert("Paciente Registrado con �xito");
+          alert("Paciente Registrado con éxito");
           this.goBackHome();
         })
         .catch((error) => {

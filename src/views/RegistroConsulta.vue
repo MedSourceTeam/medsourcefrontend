@@ -5,67 +5,106 @@
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
           <label for="">Numero de Documento del Paciente</label>
-          <input type="number" v-model="consulta.identification_patient" />
+          <input
+            type="number"
+            :disabled="validPatient"
+            v-model="consulta.identification_patient"
+          />
         </div>
-        <div class="form-group text-left">
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-if="!validPatient"
+          v-on:click="searchPatient"
+        >
+          Buscar paciente
+        </button>
+        <p v-if="validPatient">
+          <strong>Paciente: </strong> {{ patient.full_name }}
+        </p>
+        <div class="form-group text-left" v-if="validPatient">
           <label for="">Numero de Documento del Doctor</label>
-          <input type="number" v-model="consulta.identification_doctor" />
+          <input
+            type="number"
+            :disabled="validDoctor"
+            v-model="consulta.identification_doctor"
+          />
         </div>
-        <div class="form-group text-left">
-          <label for="">Pulso</label>
-          <input type="number" v-model="consulta.pulse" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Altura</label>
-          <input type="number" v-model="consulta.height" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Peso</label>
-          <input type="number" v-model="consulta.weight" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Pa</label>
-          <input type="number" v-model="consulta.pa" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Pr</label>
-          <input type="number" v-model="consulta.pr" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">T</label>
-          <input type="number" v-model="consulta.t" />
-        </div>
-        
-        <div class="form-group text-left">
-          <label for="">Medicamentos</label><br />
-          <textarea v-model="consulta.medication"> Enter text here...</textarea>
-        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          v-if="validPatient && !validDoctor"
+          v-on:click="searchDoctor"
+        >
+          Buscar doctor
+        </button>
+        <p v-if="validDoctor">
+          <strong>Medico: </strong>
+          {{ doctor.user.first_name + " " + doctor.user.last_name }}
+        </p>
+        <div v-if="validPatient && validDoctor">
+          <div class="form-group text-left">
+            <label for="">Pulso</label>
+            <input type="number" v-model="consulta.pulse" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">Altura</label>
+            <input type="number" v-model="consulta.height" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">Peso</label>
+            <input type="number" v-model="consulta.weight" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">Pa</label>
+            <input type="number" v-model="consulta.pa" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">Pr</label>
+            <input type="number" v-model="consulta.pr" />
+          </div>
+          <div class="form-group text-left">
+            <label for="">T</label>
+            <input type="number" v-model="consulta.t" />
+          </div>
 
-        <div class="form-group text-left">
-          <label for="">Sintoma</label><br />
-          <textarea v-model="consulta.symptom"> Enter text here...</textarea>
-        </div>
-
-        <div class="form-group text-left">
-          <label for="">Diagnostico</label><br />
-          <textarea v-model="consulta.diagnosis"> Enter text here...</textarea>
-        </div>      
-        
-        <div class="form-group text-left">
-          <label for="">Hospital</label>
-          <select v-model="consulta.id_hospital">
-            <option disabled value="">Seleccione un elemento</option>
-            <option
-              v-for="hospital in hospitales"
-              :key="hospital"
-              :value="hospital.id"
-              >{{ hospital.name }}</option
+          <div class="form-group text-left">
+            <label for="">Medicamentos</label><br />
+            <textarea v-model="consulta.medication">
+ Enter text here...</textarea
             >
-          </select>
-        </div>
+          </div>
 
-        <button type="submit" class="btn btn-primary">Registrarse</button>
-        <button type="button" class="btn btn-primary" v-on:click="backLogin"> Volver</button>
+          <div class="form-group text-left">
+            <label for="">Sintoma</label><br />
+            <textarea v-model="consulta.symptom"> Enter text here...</textarea>
+          </div>
+
+          <div class="form-group text-left">
+            <label for="">Diagnostico</label><br />
+            <textarea v-model="consulta.diagnosis">
+ Enter text here...</textarea
+            >
+          </div>
+
+          <div class="form-group text-left">
+            <label for="">Hospital</label>
+            <select v-model="consulta.id_hospital">
+              <option disabled value="">Seleccione un elemento</option>
+              <option
+                v-for="hospital in hospitales"
+                :key="hospital"
+                :value="hospital.id"
+                >{{ hospital.name }}</option
+              >
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Registrarse</button>
+          <button type="button" class="btn btn-primary" v-on:click="backLogin">
+            Volver
+          </button>
+        </div>
       </form>
     </div>
   </div>
@@ -79,18 +118,22 @@ export default {
 
   data: function() {
     return {
+      doctor: null,
+      patient: null,
+      validPatient: false,
+      validDoctor: false,
       consulta: {
         identification_patient: null,
         identification_doctor: null,
         pulse: null,
-        height:null,
-        weight:null,
-        pa:null,
-        pr:null,
-        t:null,
-        medication:"",
-        symptom:"",
-        diagnosis:"",
+        height: null,
+        weight: null,
+        pa: null,
+        pr: null,
+        t: null,
+        medication: "",
+        symptom: "",
+        diagnosis: "",
         id_hospital: null,
       },
       hospitales: [],
@@ -102,18 +145,18 @@ export default {
       this.$router.push({ name: "login" });
     },
     processSignUp: function() {
-            console.log(this.procedimiento);
-
-      axios
-        .post(this.$store.state.backURL + "/consulta/ingreso", this.consulta)
-        .then((result) => {
-          alert("Registro Exitoso");
-          this.backLogin();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo en el registro.");
-        });
+      console.log(this.procedimiento);
+      if (this.validPatient && this.validDoctor)
+        axios
+          .post(this.$store.state.backURL + "/consulta/ingreso", this.consulta)
+          .then((result) => {
+            alert("Registro Exitoso");
+            this.backLogin();
+          })
+          .catch((error) => {
+            console.log(error.response);
+            alert("ERROR: Fallo en el registro.");
+          });
     },
 
     getHospitales: function() {
@@ -125,6 +168,46 @@ export default {
         .catch((error) => {
           console.log(error.response);
           alert("ERROR: Fallo al obtener hospitales");
+        });
+    },
+
+    searchPatient: function() {
+      axios
+        .get(
+          this.$store.state.backURL +
+            "/paciente/" +
+            this.consulta.identification_patient
+        )
+        .then((response) => {
+          this.patient = response.data;
+          this.validPatient = true;
+        })
+        .catch((error) => {
+          if (error.response.status == 404)
+            alert(
+              "El paciente ingresado no se encuentra registrado en el sistema"
+            );
+          else alert("Se presento un error al buscar el paciente");
+        });
+    },
+
+    searchDoctor: function() {
+      axios
+        .get(
+          this.$store.state.backURL +
+            "/doctor/" +
+            this.consulta.identification_doctor
+        )
+        .then((response) => {
+          this.doctor = response.data;
+          this.validDoctor = true;
+        })
+        .catch((error) => {
+          if (error.response.status == 404)
+            alert(
+              "El doctor ingresado no se encuentra registrado en el sistema"
+            );
+          else alert("Se presento un error al buscar el doctor");
         });
     },
   },
