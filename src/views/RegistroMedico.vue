@@ -1,32 +1,40 @@
 <template>
-  <div class="container text-center">
+  <div class="container text-center" ref="page">
     <div class="col col-11 col-md-6">
       <h2>Registrarse</h2>
+      <div v-if="!valid">
+        <p class="alert alert-danger" role="alert">
+          {{ error }}
+        </p>
+      </div>
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
-          <label for="">Correo Electronico</label>
-          <input type="email" v-model="medico.user.username" />
+          <label for="">{{ fields.username }}*</label>
+          <input type="email" v-model="medico.user.username" required />
         </div>
         <div class="form-group text-left">
-          <label for="">Contraseña</label>
-          <input type="password" v-model="medico.user.password" />
-        </div>
-
-        <div class="form-group text-left">
-          <label for="">Nombres</label>
-          <input type="text" v-model="medico.user.first_name" />
+          <label for="">{{ fields.password }}*</label>
+          <input type="password" v-model="medico.user.password" required />
         </div>
         <div class="form-group text-left">
-          <label for="">Apellidos</label>
-          <input type="text" v-model="medico.user.last_name" />
+          <label for="">Confirma tu contraseña*</label>
+          <input type="password" v-model="verifyPassword" required />
         </div>
         <div class="form-group text-left">
-          <label for="">Numero de Documento</label>
-          <input type="number" v-model="medico.identification" />
+          <label for="">{{ fields.first_name }}*</label>
+          <input type="text" v-model="medico.user.first_name" required />
         </div>
         <div class="form-group text-left">
-          <label for="">Nivel Educativo</label>
-          <select v-model="medico.education">
+          <label for="">{{ fields.last_name }}*</label>
+          <input type="text" v-model="medico.user.last_name" required />
+        </div>
+        <div class="form-group text-left">
+          <label for="">{{ fields.identification }}*</label>
+          <input type="number" v-model="medico.identification" required />
+        </div>
+        <div class="form-group text-left">
+          <label for="">{{ fields.education }}*</label>
+          <select v-model="medico.education" required>
             <option disabled value="">Seleccione un elemento</option>
             <option v-for="nivel in nivelesEducativos" :key="nivel">{{
               nivel
@@ -34,12 +42,12 @@
           </select>
         </div>
         <div class="form-group text-left">
-          <label for="">Especialización</label>
+          <label for="">{{ fields.specialization }}</label>
           <input type="text" v-model="medico.specialization" />
         </div>
         <div class="form-group text-left">
-          <label for="">Hospital</label>
-          <select v-model="medico.idHospital">
+          <label for="">{{ fields.idHospital }}*</label>
+          <select v-model="medico.idHospital" required>
             <option disabled value="">Seleccione un elemento</option>
             <option
               v-for="hospital in hospitales"
@@ -60,12 +68,26 @@
 
 <script>
 import axios from "axios";
+import {
+  email,
+  required,
+  helpers,
+  minLength,
+  between,
+} from "@vuelidate/validators";
+import { useVuelidate } from "@vuelidate/core";
+
+const regexPassword = helpers.regex(
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
+);
 
 export default {
   name: "RegistroMedico",
 
   data: function() {
     return {
+      valid: true,
+      error: "",
       medico: {
         user: {
           username: "",
@@ -79,6 +101,7 @@ export default {
         specialization: "",
         idHospital: null,
       },
+      verifyPassword: "",
       nivelesEducativos: [
         "Pregrado",
         "Postgrado",
@@ -87,6 +110,34 @@ export default {
         "PostDoctorado",
       ],
       hospitales: [],
+      fields: {
+        username: "Correo Electronico",
+        password: "Contraseña",
+        first_name: "Nombres",
+        last_name: "Apellidos",
+        identification: "Numero de documento",
+        education: "Nivel educativo",
+        specialization: "Especialidad",
+        idHospital: "Hospital",
+      },
+    };
+  },
+
+  setup: () => ({ v$: useVuelidate() }),
+
+  validations() {
+    return {
+      medico: {
+        user: {
+          username: { required, email },
+          password: { required, regexPassword },
+          first_name: { required, minLength: minLength(5) },
+          last_name: { required, minLength: minLength(5) },
+        },
+        identification: { required, between: between(1000000, 9999999999) },
+        education: { required },
+        idHospital: { required },
+      },
     };
   },
 
@@ -94,7 +145,50 @@ export default {
     backLogin: function() {
       this.$router.push({ name: "login" });
     },
-    processSignUp: function() {
+
+    errorCase: function() {
+      console.log(this.$refs);
+      switch (this.v$.$errors[0].$validator) {
+        case "email":
+          this.error = "Ingresa un correo electronico valido";
+          break;
+        case "required":
+          this.error = `El campo ${
+            this.fields[this.v$.$errors[0].$property]
+          } es requerido  `;
+          break;
+        case "regexPassword":
+          this.error = `La contraseña debe contener mínimo una mayúscula, una minúscula, un número y un caracter especial`;
+          break;
+        case "minLength":
+          this.error = `El campo ${
+            this.fields[this.v$.$errors[0].$property]
+          } debe contener minimo 5 caracteres`;
+          break;
+        case "between":
+          this.error = `El campo ${
+            this.fields[this.v$.$errors[0].$property]
+          } debe contener entre 7 y 10 dígitos`;
+          break;
+        default:
+          break;
+      }
+      this.$nextTick(() => {
+        window.scrollTo(0, 0);
+      });
+    },
+
+    processSignUp: async function() {
+      this.valid = await this.v$.$validate();
+      if (!this.valid) {
+        this.errorCase();
+        return;
+      }
+      if (this.medico.user.password !== this.verifyPassword) {
+        this.error = "Las contraseñas no coinciden";
+        this.valid = false;
+        return;
+      }
       this.medico.user.email = this.medico.user.username;
       axios
         .post(this.$store.state.backURL + "/medico/registro", this.medico)
