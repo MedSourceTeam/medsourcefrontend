@@ -2,66 +2,67 @@
   <div class="container text-center">
     <div class="col col-11 col-md-6">
       <h2>Registrar Paciente</h2>
-      <form v-on:submit.prevent="processSignUp">
-        <div class="form-group text-left">
-          <label for="">Número de Identificación</label>
-          <input type="number" v-model="patient.identification" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Nombre Completo</label>
-          <input type="text" v-model="patient.full_name" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Fecha de Nacimiento</label>
-          <input type="date" v-model="patient.date_of_birth" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Número de Teléfono</label>
-          <input type="number" v-model="patient.phone" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Estado Civil</label>
-          <select v-model="patient.marital_status">
-            <option disabled value="">Seleccione un Estado Civil</option>
-            <option
-              v-for="maritalStatus in maritalStatusArray"
-              :key="maritalStatus"
-            >
-              {{ maritalStatus }}
-            </option>
-          </select>
-        </div>
-        <div class="form-group text-left">
-          <label for="">Grupo Sanguíneo</label>
-          <select v-model="patient.blood_type">
-            <option disabled value="">Seleccione un Grupo Sanguíneo</option>
-            <option v-for="bloodType in bloodTypesArray" :key="bloodType">
-              {{ bloodType }}
-            </option>
-          </select>
-        </div>
-        <div class="form-group text-left">
-          <label for="">EPS</label>
-          <select v-model="patient.idEps">
-            <option disabled value="">Seleccione una EPS</option>
-            <option v-for="eps in EPSs" :key="eps" :value="eps.id">
-              {{ eps.name }}
-            </option>
-          </select>
-        </div>
-        <button type="submit" class="btn btn-primary">
-          Registrar Paciente
-        </button>
-        <button type="button" class="btn btn-primary" v-on:click="goBackHome">
-          Volver
-        </button>
+      <form v-on:submit.prevent="processSignUp" name="patientForm">
+          <div class="form-group text-left">
+              <label for="">Número de Identificación</label>
+              <input required type="number" step="1" min="1000000" max="9999999999" v-model="patient.identification" />
+          </div>
+          <div class="form-group text-left">
+              <label for="">Nombre Completo</label>
+              <input required type="text" v-model="patient.full_name" />
+          </div>
+          <div class="form-group text-left">
+              <label for="">Fecha de Nacimiento</label>
+              <!-- validación de fecha temporal, se debe usar vuelidate -->
+              <input required type="date" name="dateField" min="1900-01-01" max="2021-12-31" v-model="patient.date_of_birth" />
+          </div>
+          <div class="form-group text-left">
+              <label for="">Número de Teléfono</label>
+              <input type="number" step="1" min="2000000" max="3099999999" v-model="patient.phone" />
+          </div>
+          <div class="form-group text-left">
+              <label for="">Estado Civil</label>
+              <select v-model="patient.marital_status">
+                  <option disabled value="">Seleccione un Estado Civil</option>
+                  <option v-for="maritalStatus in maritalStatusArray"
+                          :key="maritalStatus">
+                      {{ maritalStatus }}
+                  </option>
+              </select>
+          </div>
+          <div class="form-group text-left">
+              <label for="">Grupo Sanguíneo</label>
+              <select required v-model="patient.blood_type">
+                  <option disabled value="">Seleccione un Grupo Sanguíneo</option>
+                  <option v-for="bloodType in bloodTypesArray" :key="bloodType">
+                      {{ bloodType }}
+                  </option>
+              </select>
+          </div>
+          <div class="form-group text-left">
+              <label for="">EPS</label>
+              <select required v-model="patient.idEps">
+                  <option disabled value="">Seleccione una EPS</option>
+                  <option v-for="eps in EPSs" :key="eps" :value="eps.id">
+                      {{ eps.name }}
+                  </option>
+              </select>
+          </div>
+          <button type="submit" class="btn btn-primary">
+              Registrar Paciente
+          </button>
+          <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+              Volver
+          </button>
       </form>
     </div>
   </div>
 </template>
 
+
 <script>
 import axios from "axios";
+//import { required, between } from 'vuelidate/lib/validators';
 
 export default {
   name: "RegistroPaciente",

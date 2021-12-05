@@ -1,0 +1,104 @@
+﻿<template>
+    <div class="container text-center">
+        <div class="col col-11 col-md-6">
+            <h2>Buscar Paciente</h2>
+            <form v-on:submit.prevent="processSignUp">
+                <div class="form-group text-left">
+                    <label for="">Número de Identificación</label>
+                    <input type="number" v-model="patient.identification" />
+                </div>
+                <div class="form-group text-left">
+                    <label for="">Nombre Completo</label>
+                    <input type="text" v-model="patient.full_name" />
+                </div>
+                <div class="form-group text-left">
+                    <label for="">Fecha de Nacimiento</label>
+                    <input type="date" v-model="patient.date_of_birth" />
+                </div>
+                <div class="form-group text-left">
+                    <label for="">EPS</label>
+                    <input type="text" v-model="patient.eps_name" />
+                </div>
+                <table>
+                    <tbody>
+                        <template v-for="patient in patients">
+                            <tr>
+                                <td>
+                                    {{ patient.identification }}
+                                </td>
+                                <td>
+                                    {{ patient.full_name }}
+                                </td>
+                                <td>
+                                    {{ patient.date_of_birth }}
+                                </td>
+                                <td>
+                                    {{ patient.blood_type }}
+                                </td>
+                                <td>
+                                    {{ patient.phone }}
+                                </td>
+                                <td>
+                                    {{ patient.marital_status }}
+                                </td>
+                                <td>
+                                    {{ patient.eps.name }}
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+                <button type="submit" class="btn btn-primary" v-on:click="searchPatient">
+                    Buscar Paciente
+                </button>
+                <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+                    Volver
+                </button>
+            </form>
+        </div>
+    </div>
+</template>
+
+<script>
+    import axios from "axios";
+    export default {
+      name: "BusquedaPaciente",
+      data: function() {
+        return {
+            patient: {
+                identification: null,
+                full_name: "",
+                date_of_birth: null,
+                eps_name:null
+            },
+            patients: [],
+        };
+      },
+      methods: {
+        goBackHome: function () {
+            this.$router.push({ name: "home" });
+        },
+        searchPatient: function () {
+            axios
+                .get(this.$store.state.backURL + "/pacientes/", {
+                        params: {
+                            identification: this.patient.identification,
+                            full_name: this.patient.full_name,
+                            date_of_birth: this.patient.date_of_birth,
+                            eps_name: this.patient.eps_name
+                        }
+                    })
+                .then((response) => {
+                    this.patients = response.data
+                })
+                .catch((error) => {
+                    if (error.response.status == 404)
+                        alert(
+                            "No se encontraron resultados"
+                        );
+                    else alert("Ocurrió un error buscando el paciente");
+                });
+            },
+        },
+    };
+</script>
