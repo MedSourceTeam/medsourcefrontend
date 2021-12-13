@@ -12,6 +12,7 @@ import RegistroAntecedente from "./views/RegistroAntecedente.vue";
 import VinculacionAntecedente from "./views/RegistroPacienteAntecedente.vue";
 import BusquedaPaciente from "./views/BusquedaPacientes.vue";
 import BusquedaDesarrollo from "./views/BusquedaDesarrollos.vue";
+import BusquedaProcedimiento from "./views/BusquedaProcedimientos.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -98,6 +99,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/desarrollos",
     name: "desarrollobusqueda",
     component: BusquedaDesarrollo,
+  },
+  {
+    path: "/procedimientos",
+    name: "procedimientobusqueda",
+    component: BusquedaProcedimiento,
   },
 ];
 

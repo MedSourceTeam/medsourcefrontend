@@ -11,6 +11,9 @@
     <side-bar-link to="/registro/procedimiento" icon="fas fa-procedures"
       >Registrar Procedimiento</side-bar-link
     >
+    <side-bar-link to="/procedimientos" icon="fas fa-procedures"
+      >Buscar Procedimiento</side-bar-link
+    >
     <side-bar-link to="/registro/desarrollo" icon="fas fa-procedures"
       >Registrar Desarrollo de Procedimiento</side-bar-link
     >
