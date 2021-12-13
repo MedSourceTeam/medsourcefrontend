@@ -26,6 +26,9 @@
     <side-bar-link to="/registro/consulta" icon="fas fa-diagnoses"
       >Registrar Consulta</side-bar-link
     >
+    <side-bar-link to="/consulta/procedimiento" icon="fas fa-procedures"
+      >Consultar Procedimientos Desarrollados</side-bar-link
+    >
     <span
       class="collapsed-icon"
       :class="{ 'rotate-180': collapsed }"
