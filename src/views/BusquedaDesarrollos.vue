@@ -23,6 +23,10 @@
                     <label for="">Nombre del hospital</label>
                     <input type="text" v-model="desarrollo.hospital" />
                 </div>
+                <div class="form-group text-left">
+                    <label for="">Fecha</label>
+                    <input type="date" v-model="desarrollo.date" />
+                </div>
                 <div class="row ml-3">
                     <div class="card">
                         <div class="card-body">
@@ -81,7 +85,8 @@
                 patient: "",
                 doctor: "",
                 nurse: "",
-                hospital: ""
+                hospital: "",
+                date: null,
             },
             desarrollos: [],
         };
@@ -98,7 +103,8 @@
                             doctor: this.desarrollo.doctor,
                             nurse: this.desarrollo.nurse,
                             procedure: this.desarrollo.procedure,
-                            hospital: this.desarrollo.hospital
+                            hospital: this.desarrollo.hospital,
+                            date: this.desarrollo.date
                         }
 
                     })
