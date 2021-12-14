@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import { createStore } from "vuex";
 import "@fortawesome/fontawesome-free/js/all";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const store = createStore({
   state: {
