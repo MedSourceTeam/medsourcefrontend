@@ -1,7 +1,7 @@
 <template>
   <div class="container text-center">
     <div class="col col-11 col-md-6">
-      <h2>Registro Procedimiento</h2>
+      <h2>Registro Desarrollo de Procedimiento</h2>
       <p v-if="result">
         Errror:, server returned:<br />
         {{ result }}
@@ -121,7 +121,7 @@ Enter text here...</textarea
 import axios from "axios";
 
 export default {
-  name: "RegistroProcedimiento",
+  name: "RegistroDesarrolloProcedimiento",
 
   data: function() {
     return {

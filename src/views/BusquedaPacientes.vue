@@ -19,35 +19,54 @@
                     <label for="">EPS</label>
                     <input type="text" v-model="patient.eps_name" />
                 </div>
-                <table>
-                    <tbody>
-                        <template v-for="patient in patients">
-                            <tr>
-                                <td>
-                                    {{ patient.identification }}
-                                </td>
-                                <td>
-                                    {{ patient.full_name }}
-                                </td>
-                                <td>
-                                    {{ patient.date_of_birth }}
-                                </td>
-                                <td>
-                                    {{ patient.blood_type }}
-                                </td>
-                                <td>
-                                    {{ patient.phone }}
-                                </td>
-                                <td>
-                                    {{ patient.marital_status }}
-                                </td>
-                                <td>
-                                    {{ patient.eps.name }}
-                                </td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
+                <div class="row ml-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                    <th>Identificacion</th>
+                                    <th>Nombre completo</th>
+                                    <th>Fecha de Nacimiento</th>
+                                    <th>Tipo de sangre</th>
+                                    <th>Telefono</th>
+                                    <th>Estado civil</th>
+                                    <th>EPS</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template v-for="patient in patients">
+                                            <tr>
+                                                <td>
+                                                    {{ patient.identification }}
+                                                </td>
+                                                <td>
+                                                    {{ patient.full_name }}
+                                                </td>
+                                                <td>
+                                                    {{ patient.date_of_birth }}
+                                                </td>
+                                                <td>
+                                                    {{ patient.blood_type }}
+                                                </td>
+                                                <td>
+                                                    {{ patient.phone }}
+                                                </td>
+                                                <td>
+                                                    {{ patient.marital_status }}
+                                                </td>
+                                                <td>
+                                                    {{ patient.eps.name }}
+                                                </td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <button type="submit" class="btn btn-primary" v-on:click="searchPatient">
                     Buscar Paciente
                 </button>

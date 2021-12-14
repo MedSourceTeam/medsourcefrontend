@@ -8,14 +8,23 @@
       <span v-else>MedSource</span>
     </h1>
     <side-bar-link to="/home" icon="fas fa-home">Home</side-bar-link>
+    <side-bar-link to="/registro/procedimiento" icon="fas fa-procedures"
+      >Registrar Procedimiento</side-bar-link
+    >
+    <side-bar-link to="/procedimientos" icon="fas fa-procedures"
+      >Buscar Procedimiento</side-bar-link
+    >
     <side-bar-link to="/registro/desarrollo" icon="fas fa-procedures"
       >Registrar Desarrollo de Procedimiento</side-bar-link
+    >
+    <side-bar-link to="/desarrollos" icon="fas fa-procedures"
+      >Buscar Procedimientos Desarrollados</side-bar-link
     >
     <side-bar-link to="/registro/paciente" icon="fas fa-hospital-user"
       >Registrar Paciente</side-bar-link
     >
-    <side-bar-link to="/registro/procedimiento" icon="fas fa-procedures"
-      >Registrar Procedimiento</side-bar-link
+    <side-bar-link to="/pacientes" icon="fas fa-hospital-user"
+      >Buscar Paciente</side-bar-link
     >
     <side-bar-link to="/registro/antecedente" icon="fas fa-file-medical"
       >Registrar Antecedentes</side-bar-link
