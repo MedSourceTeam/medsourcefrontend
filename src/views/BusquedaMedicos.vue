@@ -1,15 +1,19 @@
 <template>
     <div class="container text-center">
         <div class="col col-11 col-md-6">
-            <h2>Buscar procedimientos</h2>
+            <h2>Buscar medicos</h2>
             <form v-on:submit.prevent="processSignUp">
                 <div class="form-group text-left">
-                    <label for="">Nombre del procedimiento</label>
-                    <input type="text" v-model="procedure.name" />
+                    <label for="">Identificacion</label>
+                    <input type="number" v-model="doctor.identification" />
                 </div>
                 <div class="form-group text-left">
-                    <label for="">Numero de uvr minimo</label>
-                    <input type="number" v-model="procedure.uvr" />
+                    <label for="">Especializacion</label>
+                    <input type="text" v-model="doctor.specialization" />
+                </div>
+                <div class="form-group text-left">
+                    <label for="">Hospital</label>
+                    <input type="text" v-model="doctor.hospital" />
                 </div>
                 <div class="row ml-3">
                     <div class="card">
@@ -19,15 +23,19 @@
                                     <thead>
                                     <tr>
                                     <th>id</th>
-                                    <th>Nombre</th>
-                                    <th>UVR</th>
+                                    <th>Identificacion</th>
+                                    <th>Nombre completo</th>
+                                    <th>Especializacion</th>
+                                    <th>Hospital</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="procedure in procedures" :key="procedure.id" >
-                                    <td>{{procedure.id}}</td>
-                                    <td>{{procedure.name}}</td>
-                                    <td>{{procedure.uvr}}</td>
+                                    <tr v-for="doctor in doctors" :key="doctor.id" >
+                                    <td>{{doctor.id}}</td>
+                                    <td>{{doctor.identification}}</td>
+                                    <td>{{doctor.full_name}}</td>
+                                    <td>{{doctor.specialization}}</td>
+                                    <td>{{doctor.hospital}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -35,8 +43,8 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="getProcedimientos">
-                    Buscar procedimientos
+                <button type="submit" class="btn btn-primary" v-on:click="getMedicos">
+                    Buscar medicos
                 </button>
                 <button type="button" class="btn btn-primary" v-on:click="goBackHome">
                     Volver
@@ -49,36 +57,38 @@
 <script>
     import axios from "axios";
     export default {
-      name: "BusquedaProcedimiento",
+      name: "BusquedaMedico",
       data: function() {
         return {
-            procedure: {
-                name: "",
-                uvr: null
+            doctor: {
+                identification: null,
+                specialization: "",
+                hospital: ""
             },
-            procedures: [],
+            doctors: [],
         };
       },
       methods: {
         goBackHome: function () {
             this.$router.push({ name: "home" });
         },
-        getProcedimientos(){
+        getMedicos(){
             axios
-                .get(this.$store.state.backURL + "/procedimientos/", {
+                .get(this.$store.state.backURL + "/mostrar_medicos/", {
                         params: {
-                            name: this.procedure.name,
-                            uvr: this.procedure.uvr
+                            identification: this.doctor.identification,
+                            specialization: this.doctor.specialization,
+                            hospital: this.doctor.hospital
                         }
 
                     })
                 .then((response) => {
                     console.log(response.data);
-                this.procedures = response.data;
+                this.doctors = response.data;
                 })
                 .catch((error) => {
                 console.log(error.response);
-                alert("ERROR: Fallo al obtener procedimientos");
+                alert("ERROR: Fallo al obtener medicos");
                 });
             },
         }

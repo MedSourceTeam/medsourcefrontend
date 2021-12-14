@@ -86,7 +86,7 @@
                 })
                 .catch((error) => {
                 console.log(error.response);
-                alert("ERROR: Fallo al obtener desarrollos");
+                alert("ERROR: Fallo al obtener antecedentes");
                 });
             },
         }
