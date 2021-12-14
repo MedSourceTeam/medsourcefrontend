@@ -13,6 +13,7 @@ import VinculacionAntecedente from "./views/RegistroPacienteAntecedente.vue";
 import BusquedaPaciente from "./views/BusquedaPacientes.vue";
 import BusquedaDesarrollo from "./views/BusquedaDesarrollos.vue";
 import BusquedaProcedimiento from "./views/BusquedaProcedimientos.vue";
+import VistaAsignacionAntecedentes from "@/views/VistaAsignacionAntecedente.vue";
 import BusquedaAntecedente from "./views/BusquedaAntecedentes.vue";
 import BusquedaMedico from "./views/BusquedaMedicos.vue";
 import BusquedaEnfermero from "./views/BusquedaEnfermeros.vue";
@@ -72,7 +73,7 @@ const routes: Array<RouteRecordRaw> = [
     path: "/registro/paciente",
     name: "pacienteregistro",
     component: RegistroPaciente,
-   },
+  },
   {
     path: "/pacientes",
     name: "pacientebusqueda",
@@ -107,6 +108,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/procedimientos",
     name: "procedimientobusqueda",
     component: BusquedaProcedimiento,
+  },
+  {
+    path: "/antecedentesPaciente",
+    name: "antecedentesPaciente",
+    component: VistaAsignacionAntecedentes,
   },
   {
     path: "/antecedentes",
