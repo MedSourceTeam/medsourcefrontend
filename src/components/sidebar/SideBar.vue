@@ -29,6 +29,9 @@
     <side-bar-link to="/registro/antecedente" icon="fas fa-file-medical"
       >Registrar Antecedentes</side-bar-link
     >
+    <side-bar-link to="/antecedentes" icon="fas fa-file-medical"
+      >Buscar Antecedentes</side-bar-link
+    >
     <side-bar-link to="/vinculacion/antecedente" icon="fas fa-book-medical"
       >Vincular Antecedentes</side-bar-link
     >
