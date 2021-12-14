@@ -38,6 +38,9 @@
     <side-bar-link to="/registro/consulta" icon="fas fa-diagnoses"
       >Registrar Consultas</side-bar-link
     >
+    <side-bar-link to="/consultas" icon="fas fa-diagnoses"
+      >Buscar Consultas</side-bar-link
+    >
     <side-bar-link to="/medicos" icon="fas fa-hand-holding-medical"
       >Buscar Medicos</side-bar-link
     >
