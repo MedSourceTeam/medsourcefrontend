@@ -1,15 +1,19 @@
 <template>
     <div class="container text-center">
         <div class="col col-11 col-md-6">
-            <h2>Buscar procedimientos</h2>
+            <h2>Buscar enfermeros</h2>
             <form v-on:submit.prevent="processSignUp">
                 <div class="form-group text-left">
-                    <label for="">Nombre del procedimiento</label>
-                    <input type="text" v-model="procedure.name" />
+                    <label for="">Identificacion</label>
+                    <input type="number" v-model="nurse.identification" />
                 </div>
                 <div class="form-group text-left">
-                    <label for="">Numero de uvr minimo</label>
-                    <input type="number" v-model="procedure.uvr" />
+                    <label for="">Area</label>
+                    <input type="text" v-model="nurse.area" />
+                </div>
+                <div class="form-group text-left">
+                    <label for="">Hospital</label>
+                    <input type="text" v-model="nurse.hospital" />
                 </div>
                 <div class="row ml-3">
                     <div class="card">
@@ -19,15 +23,19 @@
                                     <thead>
                                     <tr>
                                     <th>id</th>
-                                    <th>Nombre</th>
-                                    <th>UVR</th>
+                                    <th>Identificacion</th>
+                                    <th>Nombre completo</th>
+                                    <th>Area</th>
+                                    <th>Hospital</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="procedure in procedures" :key="procedure.id" >
-                                    <td>{{procedure.id}}</td>
-                                    <td>{{procedure.name}}</td>
-                                    <td>{{procedure.uvr}}</td>
+                                    <tr v-for="nurse in nurses" :key="nurse.id" >
+                                    <td>{{nurse.id}}</td>
+                                    <td>{{nurse.identification}}</td>
+                                    <td>{{nurse.full_name}}</td>
+                                    <td>{{nurse.area}}</td>
+                                    <td>{{nurse.hospital}}</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -35,8 +43,8 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="getProcedimientos">
-                    Buscar procedimientos
+                <button type="submit" class="btn btn-primary" v-on:click="getEnfermeros">
+                    Buscar enfermeros
                 </button>
                 <button type="button" class="btn btn-primary" v-on:click="goBackHome">
                     Volver
@@ -49,36 +57,38 @@
 <script>
     import axios from "axios";
     export default {
-      name: "BusquedaProcedimiento",
+      name: "BusquedaMedico",
       data: function() {
         return {
-            procedure: {
-                name: "",
-                uvr: null
+            nurse: {
+                identification: null,
+                area: "",
+                hospital: ""
             },
-            procedures: [],
+            nurses: [],
         };
       },
       methods: {
         goBackHome: function () {
             this.$router.push({ name: "home" });
         },
-        getProcedimientos(){
+        getEnfermeros(){
             axios
-                .get(this.$store.state.backURL + "/procedimientos/", {
+                .get(this.$store.state.backURL + "/mostrar_enfermeros/", {
                         params: {
-                            name: this.procedure.name,
-                            uvr: this.procedure.uvr
+                            identification: this.nurse.identification,
+                            area: this.nurse.area,
+                            hospital: this.nurse.hospital
                         }
 
                     })
                 .then((response) => {
                     console.log(response.data);
-                this.procedures = response.data;
+                this.nurses = response.data;
                 })
                 .catch((error) => {
                 console.log(error.response);
-                alert("ERROR: Fallo al obtener procedimientos");
+                alert("ERROR: Fallo al obtener enfermeros");
                 });
             },
         }

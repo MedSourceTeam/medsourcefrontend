@@ -12,7 +12,7 @@
       >Registrar Procedimiento</side-bar-link
     >
     <side-bar-link to="/procedimientos" icon="fas fa-procedures"
-      >Buscar Procedimiento</side-bar-link
+      >Buscar Procedimientos</side-bar-link
     >
     <side-bar-link to="/registro/desarrollo" icon="fas fa-procedures"
       >Registrar Desarrollo de Procedimiento</side-bar-link
@@ -24,7 +24,7 @@
       >Registrar Paciente</side-bar-link
     >
     <side-bar-link to="/pacientes" icon="fas fa-hospital-user"
-      >Buscar Paciente</side-bar-link
+      >Buscar Pacientes</side-bar-link
     >
     <side-bar-link to="/registro/antecedente" icon="fas fa-file-medical"
       >Registrar Antecedentes</side-bar-link
@@ -36,7 +36,16 @@
       >Vincular Antecedentes</side-bar-link
     >
     <side-bar-link to="/registro/consulta" icon="fas fa-diagnoses"
-      >Registrar Consulta</side-bar-link
+      >Registrar Consultas</side-bar-link
+    >
+    <side-bar-link to="/consultas" icon="fas fa-diagnoses"
+      >Buscar Consultas</side-bar-link
+    >
+    <side-bar-link to="/medicos" icon="fas fa-hand-holding-medical"
+      >Buscar Medicos</side-bar-link
+    >
+    <side-bar-link to="/enfermeros" icon="fas fa-hand-holding-heart"
+      >Buscar Enfermeros</side-bar-link
     >
     <span
       class="collapsed-icon"
