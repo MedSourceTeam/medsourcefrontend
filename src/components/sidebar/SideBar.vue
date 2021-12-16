@@ -1,5 +1,5 @@
 <template>
-  <div class="sidebar" :style="{ width: sideBarWidth }">
+  <div class="sidebar" :style="{ width: sideBarWidth, overflow: 'scroll' }">
     <h1>
       <span v-if="collapsed">
         <div>M</div>
@@ -110,5 +110,9 @@ export default {
 .rotate-180 {
   transform: rotate(180deg);
   transition: 0.2s linear;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 </style>
