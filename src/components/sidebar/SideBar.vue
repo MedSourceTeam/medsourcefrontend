@@ -35,6 +35,9 @@
     <side-bar-link to="/vinculacion/antecedente" icon="fas fa-book-medical"
       >Vincular Antecedentes</side-bar-link
     >
+    <side-bar-link to="/antecedentesPaciente" icon="fas fa-book-medical"
+      >Buscar Antecedentes Vinculados</side-bar-link
+    >
     <side-bar-link to="/registro/consulta" icon="fas fa-diagnoses"
       >Registrar Consultas</side-bar-link
     >
