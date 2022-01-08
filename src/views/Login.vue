@@ -1,17 +1,17 @@
 <template>
   <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Login</h2>
+  <div class="col col-8 col-md-0">
+  a
+  </div>
+    <div class="col col-4 col-md-12">
+      <h2 class="default-title h1">Iniciar Sesión</h2>
       <form v-on:submit.prevent="processLogin">
-        <div class="form-group text-left">
-          <label for="">Correo Electronico</label>
-          <input type="email" v-model="user.username" />
+        <div class="form-group">
+          <input placeholder="Correo Electrónico" type="email" v-model="user.username" />
         </div>
-        <div class="form-group text-left">
-          <label for="">Contraseña</label>
-          <input type="password" v-model="user.password" />
+        <div class="form-group">
+          <input type="password" v-model="user.password" placeholder="Contraseña" />
         </div>
-
         <button type="submit" class="btn btn-primary">Ingresar</button>
       </form>
     </div>
