@@ -1,20 +1,25 @@
 <template>
-  <div class="container text-center">
-  <div class="col col-8 col-md-0">
-  a
-  </div>
-    <div class="col col-4 col-md-12">
-      <h2 class="default-title h1">Iniciar Sesión</h2>
-      <form v-on:submit.prevent="processLogin">
+  <div class="container-fluid text-center" style="height:100vh" >
+  <div class="row" style="height:100%">
+    <div class="col-4 col-md-8">
+      <img src="../assets/images/background3.jpg" style="height:100%; object-fit:cover;" class="img-fluid" alt="Responsive image">
+    </div>
+    <div class="col col-12 col-md-4 ">
+      <h2 class="default-title h1 mt-5 pt-5">Iniciar Sesión</h2>
+      <form v-on:submit.prevent="processLogin" class="p-3">
         <div class="form-group">
-          <input placeholder="Correo Electrónico" type="email" v-model="user.username" />
+          <input class="form-control" placeholder="Correo Electrónico" type="email" v-model="user.username" />
         </div>
         <div class="form-group">
-          <input type="password" v-model="user.password" placeholder="Contraseña" />
+          <input class="form-control" type="password" v-model="user.password" placeholder="Contraseña" />
         </div>
         <button type="submit" class="btn btn-primary">Ingresar</button>
       </form>
+      <router-link to="recuperarContrasena" class="link-primary">
+        Olvidaste tu contraseña?
+      </router-link>
     </div>
+  </div>
   </div>
 </template>
 

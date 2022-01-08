@@ -44,6 +44,11 @@
     --sideBar-bg-color: var(--blue-default);
     --sideBar-item-hover: var(--blue-hover);
     --sideBar-item-active: var(--blue-dark);
+
+    background-color: var(--background);
+}
+body{
+    background-color: var(--background)!important;
 }
 .default-title{
     color: var(--blue-default);
