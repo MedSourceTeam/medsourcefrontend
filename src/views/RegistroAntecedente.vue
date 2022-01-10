@@ -1,15 +1,20 @@
 <template>
-  <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Registrar Antecedente</h2>
+  <div class="container mt-4 text-center">
+    <div class="col">
+      <h2 class="default-title">Registrar Antecedente</h2>
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
           <label for="">Nombre</label>
-          <input type="text" v-model="record.name" />
+          <input
+            class="form-control"
+            placeholder="Antecedente"
+            type="text"
+            v-model="record.name"
+          />
         </div>
         <div class="form-group text-left">
           <label for="">Clase</label>
-          <select v-model="record.kind">
+          <select class="custom-select" v-model="record.kind">
             <option disabled value="">Seleccione una clase</option>
             <option v-for="kind in kindsArray" :key="kind">
               {{ kind }}
@@ -18,12 +23,21 @@
         </div>
         <div class="form-group text-left">
           <label for="">Tipo</label>
-          <input type="text" v-model="record.sort" />
+          <input
+            class="form-control"
+            placeholder="Antecedente"
+            type="text"
+            v-model="record.sort"
+          />
         </div>
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn m-1 btn-primary">
           Registrar Antecedente
         </button>
-        <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+        <button
+          type="button"
+          class="btn m-1 btn-primary"
+          v-on:click="goBackHome"
+        >
           Volver
         </button>
       </form>
@@ -36,7 +50,7 @@ import axios from "axios";
 
 export default {
   name: "RegistroAntecedente",
-  data: function() {
+  data: function () {
     return {
       record: {
         name: "",
@@ -51,10 +65,10 @@ export default {
     };
   },
   methods: {
-    goBackHome: function() {
+    goBackHome: function () {
       this.$router.push({ name: "home" });
     },
-    processSignUp: function() {
+    processSignUp: function () {
       axios
         .post(this.$store.state.backURL + "/antecedente/ingreso", this.record)
         .then((result) => {

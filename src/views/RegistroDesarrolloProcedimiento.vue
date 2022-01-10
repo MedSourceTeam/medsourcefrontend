@@ -1,7 +1,8 @@
 <template>
-  <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Registro Desarrollo de Procedimiento</h2>
+  <div class="container mt-4 text-center">
+    <div class="col">
+      <h2 class="default-title">Registro Desarrollo de Procedimiento</h2>
+      <br />
       <p v-if="result">
         Errror:, server returned:<br />
         {{ result }}
@@ -11,6 +12,8 @@
           <label for="">Numero de Documento del Paciente</label>
           <input
             type="number"
+            class="form-control"
+            placeholder="Documento del Paciente"
             :disabled="validPatient"
             v-model="procedimiento.identification_patient"
           />
@@ -29,6 +32,8 @@
         <div class="form-group text-left" v-if="validPatient">
           <label for="">Numero de Documento del Doctor</label>
           <input
+            class="form-control"
+            placeholder="Documento del Doctor"
             type="number"
             :disabled="validDoctor"
             v-model="procedimiento.identification_doctor"
@@ -49,6 +54,8 @@
         <div class="form-group text-left" v-if="validPatient && validDoctor">
           <label for="">Numero de Documento de la Enfermera</label>
           <input
+            class="form-control"
+            placeholder="Documento de la Enfermera"
             type="number"
             v-model="procedimiento.identification_nurse"
             :disabled="validNurse"
@@ -67,48 +74,80 @@
           {{ nurse.user.first_name + " " + nurse.user.last_name }}
         </p>
         <div v-if="validPatient && validDoctor && validNurse">
-          <div class="form-group text-left">
-            <label for="">Fecha</label>
-            <input type="date" v-model="procedimiento.date" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">Sala</label>
-            <input type="number" v-model="procedimiento.room" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">Procedimiento</label><br />
-            <select v-model="procedimiento.id_procedure">
-              <option disabled value="">Seleccione un elemento</option>
-              <option
-                v-for="procedimiento in procedimientos"
-                :key="procedimiento"
-                :value="procedimiento.id"
-                >{{ procedimiento.name }}</option
+          <div class="row text-left align-items-center">
+            <div class="col-12 col-md-6">
+              <div class="form-group text-left">
+                <label for="">Fecha</label>
+                <input
+                  class="form-control"
+                  type="date"
+                  v-model="procedimiento.date"
+                />
+              </div>
+              <div class="form-group text-left">
+                <label for="">Numero de Documento de la Enfermera</label>
+                <input
+                  class="form-control"
+                  placeholder="Sala"
+                  type="number"
+                  v-model="procedimiento.room"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group mb-3">
+                <label for="inputGroupSelect00">Procedimiento</label>
+                <select
+                  class="custom-select"
+                  v-model="procedimiento.id_procedure"
+                >
+                  <option disabled value="">Seleccione un elemento</option>
+                  <option
+                    v-for="procedimiento in procedimientos"
+                    :key="procedimiento"
+                    :value="procedimiento.id"
+                  >
+                    {{ procedimiento.name }}
+                  </option>
+                </select>
+              </div>
+              <div class="form-group mb-3">
+                <label for="inputGroupSelect01">Hospital</label>
+                <select
+                  class="custom-select"
+                  v-model="procedimiento.id_hospital"
+                >
+                  <option disabled value="">Seleccione un elemento</option>
+                  <option
+                    v-for="hospital in hospitales"
+                    :key="hospital"
+                    :value="hospital.id"
+                  >
+                    {{ hospital.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group text-left">
+              <label for="">Comentario</label><br />
+              <textarea class="form-control" v-model="procedimiento.comment">
+                Enter text here...
+                </textarea
               >
-            </select>
+            </div>
           </div>
-          <div class="form-group text-left">
-            <label for="">Hospital</label><br />
-            <select v-model="procedimiento.id_hospital">
-              <option disabled value="">Seleccione un elemento</option>
-              <option
-                v-for="hospital in hospitales"
-                :key="hospital"
-                :value="hospital.id"
-                >{{ hospital.name }}</option
-              >
-            </select>
-          </div>
-          <div class="form-group text-left">
-            <label for="">Comentario</label><br />
-            <textarea v-model="procedimiento.comment">
-Enter text here...</textarea
-            >
-          </div>
-          <button type="submit" class="btn btn-primary" v-on:click="registro">
+          <button
+            type="submit"
+            class="btn m-1 btn-primary"
+            v-on:click="registro"
+          >
             Registrar
           </button>
-          <button type="button" class="btn btn-primary" v-on:click="backLogin">
+          <button
+            type="button"
+            class="btn m-1 btn-primary"
+            v-on:click="backLogin"
+          >
             Volver
           </button>
         </div>
@@ -123,7 +162,7 @@ import axios from "axios";
 export default {
   name: "RegistroDesarrolloProcedimiento",
 
-  data: function() {
+  data: function () {
     return {
       doctor: null,
       patient: null,
@@ -148,10 +187,10 @@ export default {
   },
 
   methods: {
-    backLogin: function() {
+    backLogin: function () {
       this.$router.push({ name: "home" });
     },
-    registro: function() {
+    registro: function () {
       console.log(this.procedimiento);
       if (this.validPatient && this.validDoctor && this.validNurse)
         axios
@@ -170,7 +209,7 @@ export default {
           });
     },
 
-    getProcedimientos: function() {
+    getProcedimientos: function () {
       axios
         .get(this.$store.state.backURL + "/procedimientos/")
         .then((response) => {
@@ -181,7 +220,7 @@ export default {
           alert("ERROR: Fallo al obtener procedimientos");
         });
     },
-    getHospitales: function() {
+    getHospitales: function () {
       axios
         .get(this.$store.state.backURL + "/hospital")
         .then((response) => {
@@ -193,7 +232,7 @@ export default {
         });
     },
 
-    searchPatient: function() {
+    searchPatient: function () {
       axios
         .get(
           this.$store.state.backURL +
@@ -213,7 +252,7 @@ export default {
         });
     },
 
-    searchDoctor: function() {
+    searchDoctor: function () {
       axios
         .get(
           this.$store.state.backURL +
@@ -233,7 +272,7 @@ export default {
         });
     },
 
-    searchNurse: function() {
+    searchNurse: function () {
       axios
         .get(
           this.$store.state.backURL +
@@ -254,7 +293,7 @@ export default {
     },
   },
 
-  created: function() {
+  created: function () {
     this.getHospitales();
     this.getProcedimientos();
   },

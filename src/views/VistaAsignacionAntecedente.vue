@@ -1,38 +1,47 @@
 <template>
-  <form v-on:submit.prevent="buscar" class="col-11">
-    <div class="form-group">
-      <label for="">Nombre del paciente</label>
-      <input type="text" class="form-control" v-model="paciente_nombre" />
+  <div class="container mt-4 text-center">
+    <div class="col">
+      <h2 class="default-title">Buscar antecedentes vinculados</h2>
+      <form v-on:submit.prevent="buscar" class="col-11">
+        <div class="form-group text-left">
+          <label for="">Nombre del paciente</label>
+          <input class="form-control" type="text" v-model="paciente_nombre" />
+        </div>
+        <div class="form-group text-left">
+          <label for="">Identificación del paciente</label>
+          <input
+            type="number"
+            class="form-control"
+            v-model="paciente_identificacion"
+          />
+        </div>
+        <div class="form-group text-left">
+          <label for="">Nombre del antecedente</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="antecedente_nombre"
+          />
+        </div>
+        <div class="form-group text-left">
+          <label for="">Tipo de antecedente</label>
+          <input type="text" class="form-control" v-model="antecedente_tipo" />
+        </div>
+        <div class="form-group text-left">
+          <label for="">Clase de antecedente</label>
+          <input type="text" class="form-control" v-model="antecedente_calse" />
+        </div>
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </form>
+      <div v-if="resultados">
+        <h2>Resultados de busqueda</h2>
+        <AntecedenteListItem
+          v-for="antecedente in antecedentes"
+          :antecedente="antecedente"
+          :key="antecedente"
+        />
+      </div>
     </div>
-    <div class="form-group">
-      <label for="">Identificación del paciente</label>
-      <input
-        type="number"
-        class="form-control"
-        v-model="paciente_identificacion"
-      />
-    </div>
-    <div class="form-group">
-      <label for="">Nombre del antecedente</label>
-      <input type="text" class="form-control" v-model="antecedente_nombre" />
-    </div>
-    <div class="form-group">
-      <label for="">Tipo de antecedente</label>
-      <input type="text" class="form-control" v-model="antecedente_tipo" />
-    </div>
-    <div class="form-group">
-      <label for="">Clase de antecedente</label>
-      <input type="text" class="form-control" v-model="antecedente_calse" />
-    </div>
-    <button type="submit">Buscar</button>
-  </form>
-  <div v-if="resultados">
-    <h2>Resultados de busqueda</h2>
-    <AntecedenteListItem
-      v-for="antecedente in antecedentes"
-      :antecedente="antecedente"
-      :key="antecedente"
-    />
   </div>
 </template>
 
@@ -43,7 +52,7 @@ import axios from "axios";
 export default {
   name: "VistaAsignacionAntecedente",
 
-  data: function() {
+  data: function () {
     return {
       antecedentes: [],
       paciente_nombre: null,
@@ -60,7 +69,7 @@ export default {
   },
 
   methods: {
-    buscar: async function() {
+    buscar: async function () {
       axios
         .get(this.$store.state.backURL + "/mostrar_antecedentes", {
           params: {

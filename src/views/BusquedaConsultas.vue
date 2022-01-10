@@ -1,9 +1,9 @@
 <template>
   <div class="container mt-4 text-center">
-    <div class="col col-6 col-md-12">
+    <div class="col">
       <h2 class="default-title">Buscar consultas</h2>
       <form class="mt-3" v-on:submit.prevent="processSignUp">
-        <div class="ml-auto mr-auto col col-6">
+        <div class="ml-auto mr-auto col-12 col-md-6">
           <div class="form-group text-left">
             <input
               class="form-control"
@@ -58,7 +58,7 @@
                     <tbody>
                       <template
                         v-for="consultation in consultations"
-                        :key="consultations.id"
+                        :key="consultation.id"
                       >
                         <tr>
                           <td>

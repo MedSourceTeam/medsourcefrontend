@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid text-center" style="height: 100vh">
     <div class="row" style="height: 100%">
-      <div class="col-4 col-md-8">
+      <div class="col-4 col-md-8 d-none d-md-block">
         <img
           src="../assets/images/background3.jpg"
           style="height: 100%; object-fit: cover"

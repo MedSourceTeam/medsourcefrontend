@@ -1,9 +1,9 @@
 <template>
   <div class="container mt-4 text-center">
-    <div class="col col-6 col-md-12">
+    <div class="col">
       <h2 class="default-title">Buscar medicos</h2>
       <form v-on:submit.prevent="processSignUp">
-        <div class="ml-auto mr-auto col col-6">
+        <div class="ml-auto mr-auto col-12 col-md-6">
           <div class="form-group text-left">
             <input
               class="form-control"
@@ -29,7 +29,21 @@
             />
           </div>
         </div>
-        <div v-if="doctors.length != 0" class="row ml-3">
+        <button
+          type="submit"
+          class="btn m-1 btn-primary"
+          v-on:click="getMedicos"
+        >
+          Buscar medicos
+        </button>
+        <button
+          type="button"
+          class="btn m-1 btn-primary"
+          v-on:click="goBackHome"
+        >
+          Volver
+        </button>
+        <div v-if="doctors.length != 0" class="row ml-3 mt-3">
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
@@ -57,20 +71,6 @@
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          class="btn m-1 btn-primary"
-          v-on:click="getMedicos"
-        >
-          Buscar medicos
-        </button>
-        <button
-          type="button"
-          class="btn m-1 btn-primary"
-          v-on:click="goBackHome"
-        >
-          Volver
-        </button>
       </form>
     </div>
   </div>

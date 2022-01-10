@@ -1,7 +1,12 @@
 <template>
   <SideBar v-if="$store.state.isAuth == true" />
-  <div v-if="$store.state.isAuth == true" v-bind:style="{ 'margin-left': sideBarWidth }"><router-view /></div>
-  <div v-else v-bind:style="{ 'margin-left': 0}"><router-view /></div>
+  <div
+    v-if="$store.state.isAuth == true"
+    v-bind:style="{ 'margin-left': sideBarWidth }"
+  >
+    <router-view />
+  </div>
+  <div v-else v-bind:style="{ 'margin-left': 0 }"><router-view /></div>
 </template>
 
 <script>
@@ -12,7 +17,7 @@ export default {
     SideBar,
   },
   setup() {
-    return { sideBarWidth};
+    return { sideBarWidth };
   },
 };
 </script>

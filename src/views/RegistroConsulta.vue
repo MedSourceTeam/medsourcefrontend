@@ -1,12 +1,14 @@
 <template>
   <div class="container mt-4 text-center">
-    <div class="col col-6 col-md-12">
+    <div class="col">
       <h2 class="default-title">Registrar Consulta</h2>
+      <br />
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
+          <label for="">Numero de Documento del Paciente</label>
           <input
             class="form-control"
-            placeholder="Número de Documento del Paciente"
+            placeholder="Documento del Paciente"
             type="number"
             :disabled="validPatient"
             v-model="consulta.identification_patient"
@@ -24,6 +26,7 @@
           <strong>Paciente: </strong> {{ patient.full_name }}
         </p>
         <div class="form-group text-left" v-if="validPatient">
+          <label for="">Numero de Documento del Doctor</label>
           <input
             class="form-control"
             placeholder="Número de Documento del Doctor"

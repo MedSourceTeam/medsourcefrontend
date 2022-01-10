@@ -1,12 +1,13 @@
 <template>
-  <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Registrar Antecedente</h2>
+  <div class="container mt-4 text-center">
+    <div class="col">
+      <h2 class="default-title">Registrar Antecedente</h2>
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
           <label for="">Numero de Documento del Paciente</label>
           <input
             type="number"
+            class="form-control"
             v-model="paciente_antecedente.idPatient"
             :disabled="validPatient"
           />
@@ -25,20 +26,28 @@
         <div v-if="validPatient">
           <div class="form-group text-left">
             <label for="">Antecedente</label>
-            <select v-model="paciente_antecedente.idRecord">
+            <select
+              class="custom-select"
+              v-model="paciente_antecedente.idRecord"
+            >
               <option disabled value="">Seleccione un elemento</option>
               <option
                 v-for="antecedente in antecedentes"
                 :key="antecedente"
                 :value="antecedente.id"
-                >{{ antecedente.name }}</option
               >
+                {{ antecedente.name }}
+              </option>
             </select>
           </div>
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn m-1 btn-primary">
             Vincular Antecedente con Paciente
           </button>
-          <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+          <button
+            type="button"
+            class="btn m-1 btn-primary"
+            v-on:click="goBackHome"
+          >
             Volver
           </button>
         </div>
@@ -52,7 +61,7 @@ import axios from "axios";
 
 export default {
   name: "VinculacionAntecedente",
-  data: function() {
+  data: function () {
     return {
       patient: null,
       validPatient: false,
@@ -64,10 +73,10 @@ export default {
     };
   },
   methods: {
-    goBackHome: function() {
+    goBackHome: function () {
       this.$router.push({ name: "home" });
     },
-    processSignUp: function() {
+    processSignUp: function () {
       if (this.validPatient)
         axios
           .post(
@@ -84,7 +93,7 @@ export default {
           });
     },
 
-    getAntecedentes: function() {
+    getAntecedentes: function () {
       axios
         .get(this.$store.state.backURL + "/antecedentes")
         .then((response) => {
@@ -96,7 +105,7 @@ export default {
         });
     },
 
-    searchPatient: function() {
+    searchPatient: function () {
       axios
         .get(
           this.$store.state.backURL +
@@ -116,7 +125,7 @@ export default {
         });
     },
   },
-  created: function() {
+  created: function () {
     this.getAntecedentes();
   },
 };
