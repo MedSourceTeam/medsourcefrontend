@@ -1,21 +1,20 @@
 <template>
-    <div class="container text-center">
-        <div class="col col-11 col-md-6">
-            <h2>Buscar enfermeros</h2>
+    <div class="container mt-4 text-center">
+        <div class="col col-6 col-md-12 ">
+            <h2 class="default-title">Buscar enfermeros</h2>
             <form v-on:submit.prevent="processSignUp">
+                <div class="ml-auto  mr-auto col col-6">
                 <div class="form-group text-left">
-                    <label for="">Identificacion</label>
-                    <input type="number" v-model="nurse.identification" />
+                    <input  class="form-control" placeholder="Identificación" type="number" v-model="nurse.identification" />
                 </div>
                 <div class="form-group text-left">
-                    <label for="">Area</label>
-                    <input type="text" v-model="nurse.area" />
+                    <input class="form-control" placeholder="Área" type="text" v-model="nurse.area" />
                 </div>
                 <div class="form-group text-left">
-                    <label for="">Hospital</label>
-                    <input type="text" v-model="nurse.hospital" />
+                    <input  class="form-control" placeholder="Hospital" type="text" v-model="nurse.hospital" />
                 </div>
-                <div class="row ml-3">
+                </div>
+                <div v-if="nurses.length != 0" class="row ml-3">
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -43,10 +42,10 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary" v-on:click="getEnfermeros">
+                <button type="submit" class="btn m-1 btn-primary" v-on:click="getEnfermeros">
                     Buscar enfermeros
                 </button>
-                <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+                <button type="button" class="btn m-1 btn-primary" v-on:click="goBackHome">
                     Volver
                 </button>
             </form>

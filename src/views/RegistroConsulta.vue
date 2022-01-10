@@ -1,11 +1,12 @@
 <template>
-  <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Registrarse</h2>
+  <div class="container mt-4 text-center">
+    <div class="col col-6 col-md-12">
+      <h2 class="default-title">Registrar Consulta</h2>
       <form v-on:submit.prevent="processSignUp">
         <div class="form-group text-left">
-          <label for="">Numero de Documento del Paciente</label>
           <input
+            class="form-control"
+            placeholder="Número de Documento del Paciente"
             type="number"
             :disabled="validPatient"
             v-model="consulta.identification_patient"
@@ -23,8 +24,9 @@
           <strong>Paciente: </strong> {{ patient.full_name }}
         </p>
         <div class="form-group text-left" v-if="validPatient">
-          <label for="">Numero de Documento del Doctor</label>
           <input
+            class="form-control"
+            placeholder="Número de Documento del Doctor"
             type="number"
             :disabled="validDoctor"
             v-model="consulta.identification_doctor"
@@ -43,65 +45,106 @@
           {{ doctor.user.first_name + " " + doctor.user.last_name }}
         </p>
         <div v-if="validPatient && validDoctor">
-          <div class="form-group text-left">
-            <label for="">Pulso</label>
-            <input type="number" v-model="consulta.pulse" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">Altura</label>
-            <input type="number" v-model="consulta.height" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">Peso</label>
-            <input type="number" v-model="consulta.weight" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">Pa</label>
-            <input type="number" v-model="consulta.pa" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">Pr</label>
-            <input type="number" v-model="consulta.pr" />
-          </div>
-          <div class="form-group text-left">
-            <label for="">T</label>
-            <input type="number" v-model="consulta.t" />
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <div class="form-group text-left">
+                <label for="">Pulso</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="consulta.pulse"
+                />
+              </div>
+              <div class="form-group text-left">
+                <label for="">Altura</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="consulta.height"
+                />
+              </div>
+              <div class="form-group text-left">
+                <label for="">Peso</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="consulta.weight"
+                />
+              </div>
+            </div>
+            <div class="col-12 col-md-6">
+              <div class="form-group text-left">
+                <label for="">Pa</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="consulta.pa"
+                />
+              </div>
+              <div class="form-group text-left">
+                <label for="">Pr</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="consulta.pr"
+                />
+              </div>
+              <div class="form-group text-left">
+                <label for="">T</label>
+                <input
+                  class="form-control"
+                  type="number"
+                  v-model="consulta.t"
+                />
+              </div>
+            </div>
           </div>
 
           <div class="form-group text-left">
             <label for="">Medicamentos</label><br />
-            <textarea v-model="consulta.medication">
+            <textarea class="form-control" v-model="consulta.medication">
  Enter text here...</textarea
             >
           </div>
 
           <div class="form-group text-left">
             <label for="">Sintoma</label><br />
-            <textarea v-model="consulta.symptom"> Enter text here...</textarea>
-          </div>
-
-          <div class="form-group text-left">
-            <label for="">Diagnostico</label><br />
-            <textarea v-model="consulta.diagnosis">
+            <textarea class="form-control" v-model="consulta.symptom">
  Enter text here...</textarea
             >
           </div>
 
           <div class="form-group text-left">
-            <label for="">Hospital</label>
-            <select v-model="consulta.id_hospital">
+            <label for="">Diagnostico</label><br />
+            <textarea class="form-control" v-model="consulta.diagnosis">
+ Enter text here...</textarea
+            >
+          </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="inputGroupSelect01"
+                >Hospital</label
+              >
+            </div>
+            <select class="custom-select" v-model="consulta.id_hospital">
               <option disabled value="">Seleccione un elemento</option>
               <option
                 v-for="hospital in hospitales"
                 :key="hospital"
                 :value="hospital.id"
-                >{{ hospital.name }}</option
               >
+                {{ hospital.name }}
+              </option>
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary">Registrarse</button>
-          <button type="button" class="btn btn-primary" v-on:click="backLogin">
+          <button type="submit" class="btn m-1 btn-primary">Registrarse</button>
+          <button
+            type="button"
+            class="btn m-1 btn-primary"
+            v-on:click="backLogin"
+          >
             Volver
           </button>
         </div>
@@ -116,7 +159,7 @@ import axios from "axios";
 export default {
   name: "RegistroConsulta",
 
-  data: function() {
+  data: function () {
     return {
       doctor: null,
       patient: null,
@@ -141,10 +184,10 @@ export default {
   },
 
   methods: {
-    backLogin: function() {
+    backLogin: function () {
       this.$router.push({ name: "login" });
     },
-    processSignUp: function() {
+    processSignUp: function () {
       console.log(this.procedimiento);
       if (this.validPatient && this.validDoctor)
         axios
@@ -159,7 +202,7 @@ export default {
           });
     },
 
-    getHospitales: function() {
+    getHospitales: function () {
       axios
         .get(this.$store.state.backURL + "/hospital")
         .then((response) => {
@@ -171,7 +214,7 @@ export default {
         });
     },
 
-    searchPatient: function() {
+    searchPatient: function () {
       axios
         .get(
           this.$store.state.backURL +
@@ -191,7 +234,7 @@ export default {
         });
     },
 
-    searchDoctor: function() {
+    searchDoctor: function () {
       axios
         .get(
           this.$store.state.backURL +
@@ -212,7 +255,7 @@ export default {
     },
   },
 
-  created: function() {
+  created: function () {
     this.getHospitales();
   },
 };
