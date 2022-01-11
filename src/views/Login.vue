@@ -1,19 +1,45 @@
 <template>
-  <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Login</h2>
-      <form v-on:submit.prevent="processLogin">
-        <div class="form-group text-left">
-          <label for="">Correo Electronico</label>
-          <input type="email" v-model="user.username" />
-        </div>
-        <div class="form-group text-left">
-          <label for="">Contraseña</label>
-          <input type="password" v-model="user.password" />
-        </div>
-
-        <button type="submit" class="btn btn-primary">Ingresar</button>
-      </form>
+  <div class="container-fluid text-center" style="height: 100vh">
+    <div class="row" style="height: 100%">
+      <div class="col-4 col-md-8 d-none d-md-block">
+        <img
+          src="../assets/images/background3.jpg"
+          style="height: 100%; object-fit: cover"
+          class="img-fluid"
+          alt="Responsive image"
+        />
+      </div>
+      <div class="col col-12 col-md-4 mt-1">
+        <img
+          src="../assets/medsourceLogo.png"
+          style="height: 30%"
+          class="img-fluid"
+          alt="Responsive image"
+        />
+        <h2 class="default-title h1 pt-3">Iniciar Sesión</h2>
+        <form v-on:submit.prevent="processLogin" class="p-3">
+          <div class="form-group">
+            <input
+              class="form-control"
+              placeholder="Correo Electrónico"
+              type="email"
+              v-model="user.username"
+            />
+          </div>
+          <div class="form-group">
+            <input
+              class="form-control"
+              type="password"
+              v-model="user.password"
+              placeholder="Contraseña"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+        <router-link to="recuperarContrasena" class="link-primary">
+          Olvidaste tu contraseña?
+        </router-link>
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +51,7 @@ import { setAuthenticationToken, setRefreshToken } from "@/services/token";
 export default {
   name: "Login",
 
-  data: function() {
+  data: function () {
     return {
       user: {
         username: "",
@@ -35,7 +61,7 @@ export default {
   },
 
   methods: {
-    processLogin: function() {
+    processLogin: function () {
       console.log(this.$store.state.backURL);
       axios
         .post(this.$store.state.backURL + "/login", this.user)
@@ -52,6 +78,6 @@ export default {
     },
   },
 
-  created: function() {},
+  created: function () {},
 };
 </script>

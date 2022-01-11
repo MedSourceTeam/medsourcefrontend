@@ -1,0 +1,56 @@
+/* Color variables*/
+:root {
+    --blue: #336CFB;
+    --indigo: #1F58E7;
+    --purple: #558EFF;
+    --cyan: #EBF0FF;
+    --info: #A9C1FD;
+    --blue-lightest: #EBF0FF;
+
+    --pink: #FF7E77;
+    --red: #E74F48;
+    --danger: #FF6760;
+
+    --orange: #EFAD0A;
+    --warning: #FAC032;
+    --yellow: #FCDF98;
+
+    --green: #03B575;
+    --success: #16D090;
+    --teal: #34EEAE;
+    --white: #fff;
+    --gray: #A0A4A8;
+    --gray-dark: #52575C;
+    --primary: green;
+    --secondary: #A0A4A8;
+    --light: #f8f9fa;
+    --dark: #343a40;
+
+}
+:root{
+    --blue-default: #336CFB;
+    --blue-dark: #1F58E7;
+    --blue-hover: #558EFF;
+    --blue-light: #A9C1FD;
+    --blue-lightest: #EBF0FF;
+    --black: #25282B;
+    --gray-dark: #52575C;
+    --gray: #A0A4A8;
+    --gray-light:#CACCCF;
+    --gray-lighter: #DBDDE0;
+    --divider: #E8E8E8;
+    --background: #F6F8FB;
+
+    --sideBar-bg-color: var(--blue-default);
+    --sideBar-item-hover: var(--blue-hover);
+    --sideBar-item-active: var(--blue-dark);
+
+    background-color: var(--background);
+}
+body{
+    background-color: var(--background)!important;
+}
+.default-title{
+    color: var(--blue-default);
+    font-weight: bold !important;
+}

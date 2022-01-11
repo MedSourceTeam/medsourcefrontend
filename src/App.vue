@@ -1,6 +1,12 @@
 <template>
   <SideBar v-if="$store.state.isAuth == true" />
-  <div :style="{ 'margin-left': sideBarWidth }"><router-view /></div>
+  <div
+    v-if="$store.state.isAuth == true"
+    v-bind:style="{ 'margin-left': sideBarWidth }"
+  >
+    <router-view />
+  </div>
+  <div v-else v-bind:style="{ 'margin-left': 0 }"><router-view /></div>
 </template>
 
 <script>
@@ -19,9 +25,10 @@ export default {
 <style>
 @import url(https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css);
 @import url(https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css);
+@import "./styles/main.css";
 
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: Lato, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
