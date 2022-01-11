@@ -25,10 +25,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "root",
-    redirect: "login",
-    meta: {
-      isFree: true,
-    },
+    redirect: "home",
   },
   {
     path: "/home",

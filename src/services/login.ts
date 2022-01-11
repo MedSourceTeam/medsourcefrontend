@@ -46,7 +46,7 @@ export function isAuth() {
   if (now < access_exp) return true;
   if (now > refresh_exp || refresh == "") return false;
   renewToken();
-  return false;
+  return true;
 }
 
 interface Token {

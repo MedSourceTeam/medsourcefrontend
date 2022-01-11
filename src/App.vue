@@ -1,12 +1,12 @@
 <template>
   <SideBar v-if="store.state.isAuth == true" />
-  <div
+  <!-- <div
     v-if="store.state.isAuth == true"
     v-bind:style="{ 'margin-left': sideBarWidth }"
   >
     <router-view />
-  </div>
-  <div v-else v-bind:style="{ 'margin-left': 0 }"><router-view /></div>
+  </div> -->
+  <div :style="{'margin-left': ml }"><router-view /></div>
 </template>
 
 <script>
@@ -17,6 +17,11 @@ import { useStore } from './state';
 export default {
   components: {
     SideBar,
+  },
+  computed: {
+    ml(){
+      return this.store.state.isAuth ? sideBarWidth : 0;
+    },
   },
   setup() {
     const store = useStore();

@@ -5,6 +5,7 @@ import {
   CommitOptions,
   createLogger,
 } from "vuex";
+import { isAuth } from "./services/login";
 
 //declare state
 export type State = {
@@ -15,7 +16,7 @@ export type State = {
 //set state
 const state: State = {
   backURL: "http://127.0.0.1:8000",
-  isAuth: false,
+  isAuth: isAuth(),
 };
 
 // mutations and action enums
