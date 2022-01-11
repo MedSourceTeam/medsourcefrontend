@@ -1,22 +1,36 @@
 <template>
-  <div class="container text-center">
-    <div class="col col-11 col-md-6">
-      <h2>Registrar Procedimiento</h2>
+  <div class="container mt-4 text-center">
+    <div class="col">
+      <h2 class="default-title">Registrar Procedimiento</h2>
       <form v-on:submit.prevent="processSignUp">
-        <div class="form-group text-left">
-          <label for="">Nombre del Procedimiento</label>
-          <input type="text" v-model="procedure.name" />
+        <div class="ml-auto mr-auto col-12 col-md-6">
+          <div class="form-group text-left">
+            <input
+              class="form-control"
+              placeholder="Nombre del procedimiento"
+              type="text"
+              v-model="procedure.name"
+            />
+          </div>
+
+          <div class="form-group text-left">
+            <input
+              class="form-control"
+              placeholder="Unidad de Valor Relativa"
+              type="number"
+              v-model="procedure.uvr"
+            />
+          </div>
         </div>
 
-        <div class="form-group text-left">
-          <label for="">Unidad de Valor Relativa</label>
-          <input type="number" v-model="procedure.uvr" />
-        </div>
-
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn m-1 btn-primary">
           Registrar Procedimiento
         </button>
-        <button type="button" class="btn btn-primary" v-on:click="goBackHome">
+        <button
+          type="button"
+          class="btn m-1 btn-primary"
+          v-on:click="goBackHome"
+        >
           Volver
         </button>
       </form>
@@ -29,7 +43,7 @@ import axios from "axios";
 
 export default {
   name: "RegistroProcedimiento",
-  data: function() {
+  data: function () {
     return {
       procedure: {
         name: "",
@@ -38,11 +52,11 @@ export default {
     };
   },
   methods: {
-    goBackHome: function() {
+    goBackHome: function () {
       //TODO: cambiar cuando exista login
       this.$router.push({ name: "home" });
     },
-    processSignUp: function() {
+    processSignUp: function () {
       axios
         .post(
           this.$store.state.backURL + "/procedimiento/ingreso",

@@ -60,6 +60,7 @@
       </transition>
     </span>
     <span
+    a
       class="collapsed-icon"
       :class="{ 'rotate-180': collapsed }"
       v-on:click="toggleSideBar"
@@ -93,9 +94,9 @@ export default {
 
 <style>
 :root {
-  --sideBar-bg-color: #0f8bff;
+  /**--sideBar-bg-color: #0f8bff;
   --sideBar-item-hover: #52a5f1;
-  --sideBar-item-active: #0065c4;
+  --sideBar-item-active: #0065c4;**/
 }
 </style>
 
