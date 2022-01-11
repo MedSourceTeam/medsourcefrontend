@@ -20,12 +20,12 @@
 
 <script>
 import axios from "axios";
-import { setAuthenticationToken, setRefreshToken } from "@/services/token";
+import { setAuthenticationToken, setRefreshToken } from "@/services/login";
 
 export default {
   name: "Login",
 
-  data: function() {
+  data: function () {
     return {
       user: {
         username: "",
@@ -35,7 +35,7 @@ export default {
   },
 
   methods: {
-    processLogin: function() {
+    processLogin: function () {
       console.log(this.$store.state.backURL);
       axios
         .post(this.$store.state.backURL + "/login", this.user)
@@ -52,6 +52,8 @@ export default {
     },
   },
 
-  created: function() {},
+  created: function () {
+    this.$store.commit("logout");
+  },
 };
 </script>

@@ -36,9 +36,9 @@
           <label for="">{{ fields.education }}*</label>
           <select v-model="medico.education" required>
             <option disabled value="">Seleccione un elemento</option>
-            <option v-for="nivel in nivelesEducativos" :key="nivel">{{
-              nivel
-            }}</option>
+            <option v-for="nivel in nivelesEducativos" :key="nivel">
+              {{ nivel }}
+            </option>
           </select>
         </div>
         <div class="form-group text-left">
@@ -53,8 +53,9 @@
               v-for="hospital in hospitales"
               :key="hospital"
               :value="hospital.id"
-              >{{ hospital.name }}</option
             >
+              {{ hospital.name }}
+            </option>
           </select>
         </div>
         <button type="submit" class="btn btn-primary">Registrarse</button>
@@ -84,7 +85,7 @@ const regexPassword = helpers.regex(
 export default {
   name: "RegistroMedico",
 
-  data: function() {
+  data: function () {
     return {
       valid: true,
       error: "",
@@ -142,11 +143,11 @@ export default {
   },
 
   methods: {
-    backLogin: function() {
+    backLogin: function () {
       this.$router.push({ name: "login" });
     },
 
-    errorCase: function() {
+    errorCase: function () {
       console.log(this.$refs);
       switch (this.v$.$errors[0].$validator) {
         case "email":
@@ -178,7 +179,7 @@ export default {
       });
     },
 
-    processSignUp: async function() {
+    processSignUp: async function () {
       this.valid = await this.v$.$validate();
       if (!this.valid) {
         this.errorCase();
@@ -202,7 +203,7 @@ export default {
         });
     },
 
-    getHospitales: function() {
+    getHospitales: function () {
       axios
         .get(this.$store.state.backURL + "/hospital")
         .then((response) => {
@@ -215,7 +216,8 @@ export default {
     },
   },
 
-  created: function() {
+  created: function () {
+    this.$store.commit("logout");
     this.getHospitales();
   },
 };

@@ -3,17 +3,17 @@
 </template>
 
 <script>
-import { renewToken } from "@/services/token";
+import { renewToken } from "@/services/login";
 export default {
   name: "Home",
 
-  data: function() {
+  data: function () {
     return {
       bienvenida: "Bienvenid@ a MedSource",
     };
   },
 
-  created: function() {
+  created: function () {
     renewToken();
   },
 };

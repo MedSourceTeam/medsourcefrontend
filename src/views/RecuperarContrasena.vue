@@ -33,7 +33,7 @@ import axios from "axios";
 export default {
   name: "RecuperarContrasena",
 
-  data: function() {
+  data: function () {
     return {
       user: {
         email: "",
@@ -45,7 +45,7 @@ export default {
   },
 
   methods: {
-    sendMail: function() {
+    sendMail: function () {
       axios
         .post(
           this.$store.state.backURL + "/reestablecer_contrasena/email",
@@ -61,7 +61,7 @@ export default {
         });
     },
 
-    changePassword: function() {
+    changePassword: function () {
       axios
         .put(
           this.$store.state.backURL + "/reestablecer_contrasena/" + this.token,
@@ -77,14 +77,14 @@ export default {
         });
     },
 
-    processChange: function() {
+    processChange: function () {
       if (this.token != null) {
         if (this.password == this.user.password) this.changePassword();
         else alert("Las contraseñas no coinciden");
       } else this.sendMail();
     },
 
-    validateToken: function() {
+    validateToken: function () {
       axios
         .get(
           this.$store.state.backURL + "/reestablecer_contrasena/" + this.token
@@ -99,7 +99,8 @@ export default {
     },
   },
 
-  created: function() {
+  created: function () {
+    this.$store.commit("logout");
     if (this.$route.params.hasOwnProperty("token")) {
       this.token = this.$route.params.token;
       this.validateToken();

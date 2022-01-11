@@ -50,6 +50,15 @@
     <side-bar-link to="/enfermeros" icon="fas fa-hand-holding-heart"
       >Buscar Enfermeros</side-bar-link
     >
+    <span class="logout" v-on:click="logout">
+      <i class="fas fa-sign-out-alt"></i>
+      <span v-if="!collapsed" style="margin-left: 10px">Cerrar sesión</span>
+      <transition name="fade">
+        <span v-if="!collapsed">
+          <slot />
+        </span>
+      </transition>
+    </span>
     <span
       class="collapsed-icon"
       :class="{ 'rotate-180': collapsed }"
@@ -68,6 +77,13 @@ export default {
   name: "SideBar",
   components: {
     SideBarLink,
+  },
+  methods: {
+    logout() {
+      this.$store.commit("logout");
+      localStorage.clear();
+      this.$router.push({ name: "login" });
+    },
   },
   setup() {
     return { collapsed, toggleSideBar, sideBarWidth };
@@ -105,6 +121,17 @@ export default {
   padding: 0.75rem;
   color: rgba(255, 255, 255, 0.7);
   transition: 0.2s linear;
+  cursor: pointer;
+}
+
+.logout {
+  position: absolute;
+  bottom: 2rem;
+  padding: 0.75rem;
+  color: rgb(255, 255, 255);
+  transition: 0.2s linear;
+  font-weight: 400;
+  cursor: pointer;
 }
 
 .rotate-180 {
@@ -114,5 +141,15 @@ export default {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

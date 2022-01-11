@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { isAuth } from "@/services/login";
 import Home from "./views/Home.vue";
 import RegistroMedico from "./views/RegistroMedico.vue";
 import RegistroEnfermero from "./views/RegistroEnfermero.vue";
@@ -24,6 +25,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "root",
     redirect: "login",
+    meta: {
+      isFree: true
+    },
   },
   {
     path: "/home",
@@ -34,16 +38,25 @@ const routes: Array<RouteRecordRaw> = [
     path: "/login",
     name: "login",
     component: Login,
+    meta: {
+      isFree: true
+    },
   },
   {
     path: "/recuperarcontrasena/:token",
     name: "cambioContrasena",
     component: RecuperarContrasena,
+    meta: {
+      isFree: true
+    },
   },
   {
     path: "/recuperarcontrasena",
     name: "cambioContrasenaEmail",
     component: RecuperarContrasena,
+    meta: {
+      isFree: true
+    },
   },
   {
     path: "/medico",
@@ -54,6 +67,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/registro/medico",
     name: "medicoregistro",
     component: RegistroMedico,
+    meta: {
+      isFree: true
+    },
   },
   {
     path: "/enfermero",
@@ -64,6 +80,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/registro/enfermero",
     name: "enfermeroregistro",
     component: RegistroEnfermero,
+    meta: {
+      isFree: true
+    },
   },
   {
     path: "/registro/desarrollo",
@@ -140,6 +159,19 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(),
   routes,
+});
+
+router.beforeEach((to, from, next) => {
+  if (!(to.meta.isFree || false)) {
+    if (isAuth()) {
+      next();
+    } else {
+      alert("Usted no se encuentra autenticado. Por favor inicie sesión")
+      next({ name: "login" });
+    }
+  } else {
+    next();
+  }
 });
 
 export default router;
