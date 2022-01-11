@@ -85,7 +85,7 @@
                 />
               </div>
               <div class="form-group text-left">
-                <label for="">Numero de Documento de la Enfermera</label>
+                <label for="">Numero de la Sala</label>
                 <input
                   class="form-control"
                   placeholder="Sala"
