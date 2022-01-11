@@ -78,6 +78,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaMedico",
   data: function () {
@@ -96,7 +97,7 @@ export default {
     },
     getMedicos() {
       axios
-        .get(this.$store.state.backURL + "/mostrar_medicos/", {
+        .get(this.store.state.backURL + "/mostrar_medicos/", {
           params: {
             identification: this.doctor.identification,
             specialization: this.doctor.specialization,
@@ -112,6 +113,10 @@ export default {
           alert("ERROR: Fallo al obtener medicos");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

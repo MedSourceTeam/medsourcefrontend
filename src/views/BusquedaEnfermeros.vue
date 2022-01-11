@@ -78,6 +78,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaMedico",
   data: function () {
@@ -96,7 +97,7 @@ export default {
     },
     getEnfermeros() {
       axios
-        .get(this.$store.state.backURL + "/mostrar_enfermeros/", {
+        .get(this.store.state.backURL + "/mostrar_enfermeros/", {
           params: {
             identification: this.nurse.identification,
             area: this.nurse.area,
@@ -112,6 +113,10 @@ export default {
           alert("ERROR: Fallo al obtener enfermeros");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

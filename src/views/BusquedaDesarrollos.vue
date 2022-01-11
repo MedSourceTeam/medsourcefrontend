@@ -115,6 +115,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaDesarrollo",
   data: function () {
@@ -136,7 +137,7 @@ export default {
     },
     getProcedimientosDesarrollados() {
       axios
-        .get(this.$store.state.backURL + "/mostrar_desarrollos/", {
+        .get(this.store.state.backURL + "/mostrar_desarrollos/", {
           params: {
             patient: this.desarrollo.patient,
             doctor: this.desarrollo.doctor,
@@ -155,6 +156,10 @@ export default {
           alert("ERROR: Fallo al obtener desarrollos");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

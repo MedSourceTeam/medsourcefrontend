@@ -60,7 +60,6 @@
       </transition>
     </span>
     <span
-    a
       class="collapsed-icon"
       :class="{ 'rotate-180': collapsed }"
       v-on:click="toggleSideBar"
@@ -73,6 +72,7 @@
 <script>
 import { collapsed, toggleSideBar, sideBarWidth } from "./state";
 import SideBarLink from "./SideBarLink.vue";
+import { MutationTypes, useStore } from '@/state';
 
 export default {
   name: "SideBar",
@@ -81,24 +81,17 @@ export default {
   },
   methods: {
     logout() {
-      this.$store.commit("logout");
+      this.store.commit(MutationTypes.LOGOUT);
       localStorage.clear();
       this.$router.push({ name: "login" });
     },
   },
   setup() {
-    return { collapsed, toggleSideBar, sideBarWidth };
+    const store = useStore();
+    return { collapsed, toggleSideBar, sideBarWidth, store };
   },
 };
 </script>
-
-<style>
-:root {
-  /**--sideBar-bg-color: #0f8bff;
-  --sideBar-item-hover: #52a5f1;
-  --sideBar-item-active: #0065c4;**/
-}
-</style>
 
 <style scoped>
 .sidebar {

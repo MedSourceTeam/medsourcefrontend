@@ -58,6 +58,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 
 export default {
   name: "VinculacionAntecedente",
@@ -80,7 +81,7 @@ export default {
       if (this.validPatient)
         axios
           .post(
-            this.$store.state.backURL + "/vinculacion_antecedente/ingreso",
+            this.store.state.backURL + "/vinculacion_antecedente/ingreso",
             this.paciente_antecedente
           )
           .then((result) => {
@@ -95,7 +96,7 @@ export default {
 
     getAntecedentes: function () {
       axios
-        .get(this.$store.state.backURL + "/antecedentes")
+        .get(this.store.state.backURL + "/antecedentes")
         .then((response) => {
           this.antecedentes = response.data;
         })
@@ -108,7 +109,7 @@ export default {
     searchPatient: function () {
       axios
         .get(
-          this.$store.state.backURL +
+          this.store.state.backURL +
             "/paciente/" +
             this.paciente_antecedente.idPatient
         )
@@ -127,6 +128,10 @@ export default {
   },
   created: function () {
     this.getAntecedentes();
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

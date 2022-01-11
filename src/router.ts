@@ -19,6 +19,7 @@ import BusquedaAntecedente from "./views/BusquedaAntecedentes.vue";
 import BusquedaMedico from "./views/BusquedaMedicos.vue";
 import BusquedaEnfermero from "./views/BusquedaEnfermeros.vue";
 import BusquedaConsulta from "./views/BusquedaConsultas.vue";
+import { MutationTypes, useStore } from "./state";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -26,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "root",
     redirect: "login",
     meta: {
-      isFree: true
+      isFree: true,
     },
   },
   {
@@ -39,7 +40,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "login",
     component: Login,
     meta: {
-      isFree: true
+      isFree: true,
     },
   },
   {
@@ -47,7 +48,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "cambioContrasena",
     component: RecuperarContrasena,
     meta: {
-      isFree: true
+      isFree: true,
     },
   },
   {
@@ -55,7 +56,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "cambioContrasenaEmail",
     component: RecuperarContrasena,
     meta: {
-      isFree: true
+      isFree: true,
     },
   },
   {
@@ -68,7 +69,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "medicoregistro",
     component: RegistroMedico,
     meta: {
-      isFree: true
+      isFree: true,
     },
   },
   {
@@ -81,7 +82,7 @@ const routes: Array<RouteRecordRaw> = [
     name: "enfermeroregistro",
     component: RegistroEnfermero,
     meta: {
-      isFree: true
+      isFree: true,
     },
   },
   {
@@ -166,7 +167,8 @@ router.beforeEach((to, from, next) => {
     if (isAuth()) {
       next();
     } else {
-      alert("Usted no se encuentra autenticado. Por favor inicie sesión")
+      alert("Usted no se encuentra autenticado. Por favor inicie sesión");
+      useStore().commit(MutationTypes.LOGOUT);
       next({ name: "login" });
     }
   } else {

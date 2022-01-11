@@ -48,6 +48,7 @@
 <script>
 import AntecedenteListItem from "@/components/AntecedenteListItem.vue";
 import axios from "axios";
+import { useStore } from '@/state';
 
 export default {
   name: "VistaAsignacionAntecedente",
@@ -71,7 +72,7 @@ export default {
   methods: {
     buscar: async function () {
       axios
-        .get(this.$store.state.backURL + "/mostrar_antecedentes", {
+        .get(this.store.state.backURL + "/mostrar_antecedentes", {
           params: {
             patient__identification__icontains: this.paciente_identificacion,
             patient__full_name__icontains: this.paciente_nombre,
@@ -89,6 +90,10 @@ export default {
           alert("Se presento un error en la busqueda.");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

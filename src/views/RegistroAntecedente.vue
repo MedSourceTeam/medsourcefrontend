@@ -47,6 +47,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 
 export default {
   name: "RegistroAntecedente",
@@ -70,7 +71,7 @@ export default {
     },
     processSignUp: function () {
       axios
-        .post(this.$store.state.backURL + "/antecedente/ingreso", this.record)
+        .post(this.store.state.backURL + "/antecedente/ingreso", this.record)
         .then((result) => {
           alert("Antecedente Registrado con éxito");
           this.goBackHome();
@@ -80,6 +81,10 @@ export default {
           alert("ERROR: Fallo durante el registro del antecedente");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

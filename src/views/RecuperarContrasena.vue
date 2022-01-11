@@ -35,6 +35,7 @@
 
 <script>
 import axios from "axios";
+import { MutationTypes, useStore } from '@/state';
 
 export default {
   name: "RecuperarContrasena",
@@ -54,7 +55,7 @@ export default {
     sendMail: function () {
       axios
         .post(
-          this.$store.state.backURL + "/reestablecer_contrasena/email",
+          this.store.state.backURL + "/reestablecer_contrasena/email",
           this.user
         )
         .then((result) => {
@@ -70,7 +71,7 @@ export default {
     changePassword: function () {
       axios
         .put(
-          this.$store.state.backURL + "/reestablecer_contrasena/" + this.token,
+          this.store.state.backURL + "/reestablecer_contrasena/" + this.token,
           this.user
         )
         .then((result) => {
@@ -93,7 +94,7 @@ export default {
     validateToken: function () {
       axios
         .get(
-          this.$store.state.backURL + "/reestablecer_contrasena/" + this.token
+          this.store.state.backURL + "/reestablecer_contrasena/" + this.token
         )
         .then((result) => {
           if (!result.data.exitoso) this.$router.push({ name: "login" });
@@ -106,11 +107,14 @@ export default {
   },
 
   created: function () {
-    this.$store.commit("logout");
     if (this.$route.params.hasOwnProperty("token")) {
       this.token = this.$route.params.token;
       this.validateToken();
     }
+  },
+  setup() {
+    const store = useStore();
+    return { store };
   },
 };
 </script>

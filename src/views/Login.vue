@@ -47,6 +47,7 @@
 <script>
 import axios from "axios";
 import { setAuthenticationToken, setRefreshToken } from "@/services/login";
+import { MutationTypes, useStore } from '@/state';
 
 export default {
   name: "Login",
@@ -62,13 +63,13 @@ export default {
 
   methods: {
     processLogin: function () {
-      console.log(this.$store.state.backURL);
+      console.log(this.store.state.backURL);
       axios
-        .post(this.$store.state.backURL + "/login", this.user)
+        .post(this.store.state.backURL + "/login", this.user)
         .then((result) => {
           setAuthenticationToken(result.data.access);
           setRefreshToken(result.data.refresh);
-          this.$store.commit("login");
+          this.store.commit(MutationTypes.LOGIN);
           this.$router.push({ name: "home" });
         })
         .catch((error) => {
@@ -77,9 +78,9 @@ export default {
         });
     },
   },
-
-  created: function () {
-    this.$store.commit("logout");
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

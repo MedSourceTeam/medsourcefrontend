@@ -40,6 +40,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 
 export default {
   name: "RegistroProcedimiento",
@@ -53,13 +54,12 @@ export default {
   },
   methods: {
     goBackHome: function () {
-      //TODO: cambiar cuando exista login
       this.$router.push({ name: "home" });
     },
     processSignUp: function () {
       axios
         .post(
-          this.$store.state.backURL + "/procedimiento/ingreso",
+          this.store.state.backURL + "/procedimiento/ingreso",
           this.procedure
         )
         .then((result) => {
@@ -71,6 +71,10 @@ export default {
           alert("ERROR: Fallo durante el registro del procedimiento");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

@@ -62,6 +62,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaAntecedente",
   data: function () {
@@ -80,7 +81,7 @@ export default {
     },
     getAntecedentes() {
       axios
-        .get(this.$store.state.backURL + "/antecedentes", {
+        .get(this.store.state.backURL + "/antecedentes", {
           params: {
             name: this.record.name,
             kind: this.record.kind,
@@ -96,6 +97,10 @@ export default {
           alert("ERROR: Fallo al obtener antecedentes");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

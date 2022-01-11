@@ -158,6 +158,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 
 export default {
   name: "RegistroDesarrolloProcedimiento",
@@ -195,7 +196,7 @@ export default {
       if (this.validPatient && this.validDoctor && this.validNurse)
         axios
           .post(
-            this.$store.state.backURL + "/desarrollo/ingreso",
+            this.store.state.backURL + "/desarrollo/ingreso",
             this.procedimiento
           )
           .then((result) => {
@@ -211,7 +212,7 @@ export default {
 
     getProcedimientos: function () {
       axios
-        .get(this.$store.state.backURL + "/procedimientos/")
+        .get(this.store.state.backURL + "/procedimientos/")
         .then((response) => {
           this.procedimientos = response.data;
         })
@@ -222,7 +223,7 @@ export default {
     },
     getHospitales: function () {
       axios
-        .get(this.$store.state.backURL + "/hospital")
+        .get(this.store.state.backURL + "/hospital")
         .then((response) => {
           this.hospitales = response.data;
         })
@@ -235,7 +236,7 @@ export default {
     searchPatient: function () {
       axios
         .get(
-          this.$store.state.backURL +
+          this.store.state.backURL +
             "/paciente/" +
             this.procedimiento.identification_patient
         )
@@ -255,7 +256,7 @@ export default {
     searchDoctor: function () {
       axios
         .get(
-          this.$store.state.backURL +
+          this.store.state.backURL +
             "/doctor/" +
             this.procedimiento.identification_doctor
         )
@@ -275,7 +276,7 @@ export default {
     searchNurse: function () {
       axios
         .get(
-          this.$store.state.backURL +
+          this.store.state.backURL +
             "/enfermero/" +
             this.procedimiento.identification_nurse
         )
@@ -296,6 +297,10 @@ export default {
   created: function () {
     this.getHospitales();
     this.getProcedimientos();
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

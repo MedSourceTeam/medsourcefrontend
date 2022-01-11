@@ -65,6 +65,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaProcedimiento",
   data: function () {
@@ -82,7 +83,7 @@ export default {
     },
     getProcedimientos() {
       axios
-        .get(this.$store.state.backURL + "/procedimientos/", {
+        .get(this.store.state.backURL + "/procedimientos/", {
           params: {
             name: this.procedure.name,
             uvr: this.procedure.uvr,
@@ -97,6 +98,10 @@ export default {
           alert("ERROR: Fallo al obtener procedimientos");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

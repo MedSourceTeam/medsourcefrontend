@@ -130,6 +130,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaConsulta",
   data: function () {
@@ -148,7 +149,7 @@ export default {
     },
     searchConsultation: function () {
       axios
-        .get(this.$store.state.backURL + "/mostrar_consultas/", {
+        .get(this.store.state.backURL + "/mostrar_consultas/", {
           params: {
             patient: this.consultation.patient,
             doctor: this.consultation.doctor,
@@ -164,6 +165,10 @@ export default {
           else alert("Ocurrió un error buscando las consultas");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

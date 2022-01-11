@@ -158,6 +158,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 
 export default {
   name: "RegistroConsulta",
@@ -194,7 +195,7 @@ export default {
       console.log(this.procedimiento);
       if (this.validPatient && this.validDoctor)
         axios
-          .post(this.$store.state.backURL + "/consulta/ingreso", this.consulta)
+          .post(this.store.state.backURL + "/consulta/ingreso", this.consulta)
           .then((result) => {
             alert("Registro Exitoso");
             this.backLogin();
@@ -207,7 +208,7 @@ export default {
 
     getHospitales: function () {
       axios
-        .get(this.$store.state.backURL + "/hospital")
+        .get(this.store.state.backURL + "/hospital")
         .then((response) => {
           this.hospitales = response.data;
         })
@@ -220,7 +221,7 @@ export default {
     searchPatient: function () {
       axios
         .get(
-          this.$store.state.backURL +
+          this.store.state.backURL +
             "/paciente/" +
             this.consulta.identification_patient
         )
@@ -240,7 +241,7 @@ export default {
     searchDoctor: function () {
       axios
         .get(
-          this.$store.state.backURL +
+          this.store.state.backURL +
             "/doctor/" +
             this.consulta.identification_doctor
         )
@@ -260,6 +261,10 @@ export default {
 
   created: function () {
     this.getHospitales();
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

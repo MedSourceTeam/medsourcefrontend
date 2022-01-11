@@ -104,6 +104,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 export default {
   name: "BusquedaPaciente",
   data: function () {
@@ -123,7 +124,7 @@ export default {
     },
     searchPatient: function () {
       axios
-        .get(this.$store.state.backURL + "/pacientes/", {
+        .get(this.store.state.backURL + "/pacientes/", {
           params: {
             identification: this.patient.identification,
             full_name: this.patient.full_name,
@@ -140,6 +141,10 @@ export default {
           else alert("Ocurrió un error buscando el paciente");
         });
     },
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

@@ -77,6 +77,7 @@ import {
   between,
 } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import { MutationTypes, useStore } from '@/state';
 
 const regexPassword = helpers.regex(
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
@@ -192,7 +193,7 @@ export default {
       }
       this.medico.user.email = this.medico.user.username;
       axios
-        .post(this.$store.state.backURL + "/medico/registro", this.medico)
+        .post(this.store.state.backURL + "/medico/registro", this.medico)
         .then((result) => {
           alert("Registro Exitoso");
           this.backLogin();
@@ -205,7 +206,7 @@ export default {
 
     getHospitales: function () {
       axios
-        .get(this.$store.state.backURL + "/hospital")
+        .get(this.store.state.backURL + "/hospital")
         .then((response) => {
           this.hospitales = response.data;
         })
@@ -217,8 +218,11 @@ export default {
   },
 
   created: function () {
-    this.$store.commit("logout");
     this.getHospitales();
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>

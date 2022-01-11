@@ -101,6 +101,7 @@
 
 <script>
 import axios from "axios";
+import { useStore } from '@/state';
 //import { required, between } from 'vuelidate/lib/validators';
 
 export default {
@@ -133,7 +134,7 @@ export default {
     },
     processSignUp: function () {
       axios
-        .post(this.$store.state.backURL + "/paciente/ingreso", this.patient)
+        .post(this.store.state.backURL + "/paciente/ingreso", this.patient)
         .then((result) => {
           alert("Paciente Registrado con éxito");
           this.goBackHome();
@@ -146,7 +147,7 @@ export default {
 
     getEPSs: function () {
       axios
-        .get(this.$store.state.backURL + "/eps")
+        .get(this.store.state.backURL + "/eps")
         .then((response) => {
           this.EPSs = response.data;
         })
@@ -158,6 +159,10 @@ export default {
   },
   created: function () {
     this.getEPSs();
+  },
+  setup() {
+    const store = useStore();
+    return { store};
   },
 };
 </script>
