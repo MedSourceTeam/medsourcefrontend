@@ -19,6 +19,7 @@ import BusquedaAntecedente from "./views/BusquedaAntecedentes.vue";
 import BusquedaMedico from "./views/BusquedaMedicos.vue";
 import BusquedaEnfermero from "./views/BusquedaEnfermeros.vue";
 import BusquedaConsulta from "./views/BusquedaConsultas.vue";
+import EditarDesarrollo from "./views/EditarDesarrollo.vue";
 import { MutationTypes, useStore } from "./state";
 
 const routes: Array<RouteRecordRaw> = [
@@ -151,6 +152,12 @@ const routes: Array<RouteRecordRaw> = [
     path: "/consultas",
     name: "consultabusqueda",
     component: BusquedaConsulta,
+  },
+  {
+    path: '/editarDesarrollo/:id',
+    component: EditarDesarrollo,
+    name: "editarDesarrollo",
+    props: true,
   },
 ];
 

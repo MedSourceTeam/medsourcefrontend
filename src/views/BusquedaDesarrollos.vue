@@ -74,6 +74,7 @@
                       <th>Enfermera</th>
                       <th>Comentario</th>
                       <th>Hospital</th>
+                      <th>Editar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -87,6 +88,13 @@
                       <td>{{ desarrollo.nurse }}</td>
                       <td>{{ desarrollo.comment }}</td>
                       <td>{{ desarrollo.hospital }}</td>
+                      <td>
+                      <router-link :to="{ name: 'editarDesarrollo', params: { id: desarrollo.id }}">
+                        <button type="button" class="btn btn-primary">
+                            Editar
+                          </button>
+                      </router-link>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -115,7 +123,7 @@
 
 <script>
 import axios from "axios";
-import { useStore } from '@/state';
+import { useStore } from "@/state";
 export default {
   name: "BusquedaDesarrollo",
   data: function () {
@@ -159,7 +167,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    return { store};
+    return { store };
   },
 };
 </script>
