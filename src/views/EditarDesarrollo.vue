@@ -129,7 +129,6 @@ export default {
           )
           .then((result) => {
             alert("El procedimiento ha sido actualizado con éxito", "success");
-            this.backLogin();
           })
           .catch((error) => {
             console.log(error.response);
