@@ -46,45 +46,46 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
 
-export default {
-  name: "RegistroAntecedente",
-  data: function () {
-    return {
-      record: {
-        name: "",
-        sort: "",
+    export default {
+      name: "RegistroAntecedente",
+      data: function () {
+        return {
+          record: {
+            name: "",
+            sort: "",
+          },
+          kindsArray: [
+            "Personal",
+            "Gineco-Obstetricos",
+            "Psicosociales",
+            "Familiares",
+          ],
+        };
       },
-      kindsArray: [
-        "Personal",
-        "Gineco-Obstetricos",
-        "Psicosociales",
-        "Familiares",
-      ],
+      methods: {
+        goBackHome: function () {
+          this.$router.push({ name: "home" });
+        },
+        processSignUp: function () {
+          axios
+            .post(this.store.state.backURL + "/antecedente/ingreso", this.record)
+            .then((result) => {
+              alert("El antecedente ha sido registrado con éxito", "success");
+              this.goBackHome();
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("Ocurrió un error registrando el antecedente", "danger");
+            });
+        },
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
     };
-  },
-  methods: {
-    goBackHome: function () {
-      this.$router.push({ name: "home" });
-    },
-    processSignUp: function () {
-      axios
-        .post(this.store.state.backURL + "/antecedente/ingreso", this.record)
-        .then((result) => {
-          alert("Antecedente Registrado con éxito");
-          this.goBackHome();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo durante el registro del antecedente");
-        });
-    },
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
 </script>

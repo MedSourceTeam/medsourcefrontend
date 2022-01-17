@@ -77,46 +77,47 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
-export default {
-  name: "BusquedaMedico",
-  data: function () {
-    return {
-      doctor: {
-        identification: null,
-        specialization: "",
-        hospital: "",
-      },
-      doctors: [],
-    };
-  },
-  methods: {
-    goBackHome: function () {
-      this.$router.push({ name: "home" });
-    },
-    getMedicos() {
-      axios
-        .get(this.store.state.backURL + "/mostrar_medicos/", {
-          params: {
-            identification: this.doctor.identification,
-            specialization: this.doctor.specialization,
-            hospital: this.doctor.hospital,
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
+    export default {
+      name: "BusquedaMedico",
+      data: function () {
+        return {
+          doctor: {
+            identification: null,
+            specialization: "",
+            hospital: "",
           },
-        })
-        .then((response) => {
-          console.log(response.data);
-          this.doctors = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo al obtener medicos");
-        });
-    },
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
+          doctors: [],
+        };
+      },
+      methods: {
+        goBackHome: function () {
+          this.$router.push({ name: "home" });
+        },
+        getMedicos() {
+          axios
+            .get(this.store.state.backURL + "/mostrar_medicos/", {
+              params: {
+                identification: this.doctor.identification,
+                specialization: this.doctor.specialization,
+                hospital: this.doctor.hospital,
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+              this.doctors = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("No se pudo conectar al servidor", "danger");
+            });
+        },
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
+    };
 </script>

@@ -100,69 +100,69 @@
 
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
-//import { required, between } from 'vuelidate/lib/validators';
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
 
-export default {
-  name: "RegistroPaciente",
-  data: function () {
-    return {
-      patient: {
-        identification: null,
-        full_name: "",
-        date_of_birth: null,
-        phone: null,
-        blood_type: null,
-        marital_status: null,
-        idEps: null,
+    export default {
+      name: "RegistroPaciente",
+      data: function () {
+        return {
+          patient: {
+            identification: null,
+            full_name: "",
+            date_of_birth: null,
+            phone: null,
+            blood_type: null,
+            marital_status: null,
+            idEps: null,
+          },
+          maritalStatusArray: [
+            "Soltero",
+            "Casado",
+            "Unión Libre",
+            "Viudo",
+            "Divorciado",
+          ],
+          bloodTypesArray: ["A+", "A-", "AB+", "AB-", "B+", "B-", "O+", "O-"],
+          EPSs: [],
+        };
       },
-      maritalStatusArray: [
-        "Soltero",
-        "Casado",
-        "Unión Libre",
-        "Viudo",
-        "Divorciado",
-      ],
-      bloodTypesArray: ["A+", "A-", "AB+", "AB-", "B+", "B-", "O+", "O-"],
-      EPSs: [],
-    };
-  },
-  methods: {
-    goBackHome: function () {
-      this.$router.push({ name: "home" });
-    },
-    processSignUp: function () {
-      axios
-        .post(this.store.state.backURL + "/paciente/ingreso", this.patient)
-        .then((result) => {
-          alert("Paciente Registrado con éxito");
-          this.goBackHome();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo durante el registro del paciente");
-        });
-    },
+      methods: {
+        goBackHome: function () {
+          this.$router.push({ name: "home" });
+        },
+        processSignUp: function () {
+          axios
+            .post(this.store.state.backURL + "/paciente/ingreso", this.patient)
+            .then((result) => {
+              alert("El paciente ha sido registrado con éxito", "success");
+              this.goBackHome();
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("Ocurrió un error registrando el paciente", "danger");
+            });
+        },
 
-    getEPSs: function () {
-      axios
-        .get(this.store.state.backURL + "/eps")
-        .then((response) => {
-          this.EPSs = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo al obtener las EPSs");
-        });
-    },
-  },
-  created: function () {
-    this.getEPSs();
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
+        getEPSs: function () {
+          axios
+            .get(this.store.state.backURL + "/eps")
+            .then((response) => {
+              this.EPSs = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("No se pudo conectar al servidor", "danger");
+            });
+        },
+      },
+      created: function () {
+        this.getEPSs();
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
+    };
 </script>

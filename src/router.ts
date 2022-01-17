@@ -164,7 +164,6 @@ router.beforeEach((to, from, next) => {
     if (isAuth()) {
       next();
     } else {
-      alert("Usted no se encuentra autenticado. Por favor inicie sesión");
       useStore().commit(MutationTypes.LOGOUT);
       next({ name: "login" });
     }

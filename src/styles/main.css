@@ -54,3 +54,7 @@ body{
     color: var(--blue-default);
     font-weight: bold !important;
 }
+
+#AlertDiv {
+    display: none;
+}

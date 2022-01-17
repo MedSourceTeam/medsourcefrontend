@@ -12,12 +12,15 @@
 </head>
 
 <body style="max-width:100%;">
-  <noscript>
-    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-        Please enable it to continue.</strong>
-  </noscript>
-  <div id="app"></div>
-  <!-- built files will be auto injected -->
+    <div id="AlertDiv" class="alert text-center" role="alert"></div>
+    <noscript>
+        <strong>
+            We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
+            Please enable it to continue.
+        </strong>
+    </noscript>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
 </body>
 
 </html>
