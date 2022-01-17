@@ -39,42 +39,43 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
 
-export default {
-  name: "RegistroProcedimiento",
-  data: function () {
-    return {
-      procedure: {
-        name: "",
-        uvr: null,
+    export default {
+      name: "RegistroProcedimiento",
+      data: function () {
+        return {
+          procedure: {
+            name: "",
+            uvr: null,
+          },
+        };
+      },
+      methods: {
+        goBackHome: function () {
+          this.$router.push({ name: "home" });
+        },
+        processSignUp: function () {
+          axios
+            .post(
+              this.store.state.backURL + "/procedimiento/ingreso",
+              this.procedure
+            )
+            .then((result) => {
+              alert("El procedimiento ha sido registrado con éxito", "success");
+              this.goBackHome();
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("Ocurrió un error registrando el procedimiento", "danger");
+            });
+        },
+      },
+      setup() {
+        const store = useStore();
+        return { store};
       },
     };
-  },
-  methods: {
-    goBackHome: function () {
-      this.$router.push({ name: "home" });
-    },
-    processSignUp: function () {
-      axios
-        .post(
-          this.store.state.backURL + "/procedimiento/ingreso",
-          this.procedure
-        )
-        .then((result) => {
-          alert("Procedimiento Registrado con éxito");
-          this.goBackHome();
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo durante el registro del procedimiento");
-        });
-    },
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
 </script>

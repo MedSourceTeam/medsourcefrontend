@@ -103,48 +103,49 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
-export default {
-  name: "BusquedaPaciente",
-  data: function () {
-    return {
-      patient: {
-        identification: null,
-        full_name: "",
-        date_of_birth: null,
-        eps_name: null,
-      },
-      patients: [],
-    };
-  },
-  methods: {
-    goBackHome: function () {
-      this.$router.push({ name: "home" });
-    },
-    searchPatient: function () {
-      axios
-        .get(this.store.state.backURL + "/pacientes/", {
-          params: {
-            identification: this.patient.identification,
-            full_name: this.patient.full_name,
-            date_of_birth: this.patient.date_of_birth,
-            eps_name: this.patient.eps_name,
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
+    export default {
+      name: "BusquedaPaciente",
+      data: function () {
+        return {
+          patient: {
+            identification: null,
+            full_name: "",
+            date_of_birth: null,
+            eps_name: null,
           },
-        })
-        .then((response) => {
-          this.patients = response.data;
-        })
-        .catch((error) => {
-          if (error.response.status == 404)
-            alert("No se encontraron resultados");
-          else alert("Ocurrió un error buscando el paciente");
-        });
-    },
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
+          patients: [],
+        };
+      },
+      methods: {
+        goBackHome: function () {
+          this.$router.push({ name: "home" });
+        },
+        searchPatient: function () {
+          axios
+            .get(this.store.state.backURL + "/pacientes/", {
+              params: {
+                identification: this.patient.identification,
+                full_name: this.patient.full_name,
+                date_of_birth: this.patient.date_of_birth,
+                eps_name: this.patient.eps_name,
+              },
+            })
+            .then((response) => {
+              this.patients = response.data;
+            })
+            .catch((error) => {
+              if (error.response.status == 404)
+                alert("No se obtuvieron resultados para tu búsqueda", "warning");
+              else alert("Ocurrió un error en el servidor", "danger");
+            });
+        },
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
+    };
 </script>

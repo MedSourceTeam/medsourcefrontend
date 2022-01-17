@@ -157,150 +157,145 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
 
-export default {
-  name: "RegistroDesarrolloProcedimiento",
+    export default {
+      name: "RegistroDesarrolloProcedimiento",
 
-  data: function () {
-    return {
-      doctor: null,
-      patient: null,
-      nurse: null,
-      validPatient: false,
-      validDoctor: false,
-      validNurse: false,
-      procedimiento: {
-        room: null,
-        date: null,
-        id_hospital: null,
-        identification_patient: null,
-        identification_nurse: null,
-        identification_doctor: null,
-        id_procedure: null,
-        comment: "",
+      data: function () {
+        return {
+          doctor: null,
+          patient: null,
+          nurse: null,
+          validPatient: false,
+          validDoctor: false,
+          validNurse: false,
+          procedimiento: {
+            room: null,
+            date: null,
+            id_hospital: null,
+            identification_patient: null,
+            identification_nurse: null,
+            identification_doctor: null,
+            id_procedure: null,
+            comment: "",
+          },
+          procedimientos: [],
+          hospitales: [],
+          result: null,
+        };
       },
-      procedimientos: [],
-      hospitales: [],
-      result: null,
+
+      methods: {
+        backLogin: function () {
+          this.$router.push({ name: "home" });
+        },
+        registro: function () {
+          console.log(this.procedimiento);
+          if (this.validPatient && this.validDoctor && this.validNurse)
+            axios
+              .post(
+                this.store.state.backURL + "/desarrollo/ingreso",
+                this.procedimiento
+              )
+              .then((result) => {
+                alert("El procedimiento ha sido registrado con éxito", "success");
+                this.backLogin();
+              })
+              .catch((error) => {
+                console.log(error.response);
+                this.result = error.response.data;
+                alert("Ocurrió un error registrando el procedimiento", "danger");
+              });
+        },
+
+        getProcedimientos: function () {
+          axios
+            .get(this.store.state.backURL + "/procedimientos/")
+            .then((response) => {
+              this.procedimientos = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("No se pudo conectar al servidor", "danger");
+            });
+        },
+        getHospitales: function () {
+          axios
+            .get(this.store.state.backURL + "/hospital")
+            .then((response) => {
+              this.hospitales = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("No se pudo conectar al servidor", "danger");
+            });
+        },
+
+        searchPatient: function () {
+          axios
+            .get(
+              this.store.state.backURL +
+                "/paciente/" +
+                this.procedimiento.identification_patient
+            )
+            .then((response) => {
+              this.patient = response.data;
+              this.validPatient = true;
+            })
+            .catch((error) => {
+              if (error.response.status == 404)
+                  alert("El paciente no se encuentra registrado en el sistema", "warning");
+              else alert("Ocurrió un error en el servidor", "danger");
+            });
+        },
+
+        searchDoctor: function () {
+          axios
+            .get(
+              this.store.state.backURL +
+                "/doctor/" +
+                this.procedimiento.identification_doctor
+            )
+            .then((response) => {
+              this.doctor = response.data;
+              this.validDoctor = true;
+            })
+            .catch((error) => {
+              if (error.response.status == 404)
+                  alert("El médico no se encuentra registrado en el sistema", "warning");
+              else alert("Ocurrió un error en el servidor", "danger");
+            });
+        },
+
+        searchNurse: function () {
+          axios
+            .get(
+              this.store.state.backURL +
+                "/enfermero/" +
+                this.procedimiento.identification_nurse
+            )
+            .then((response) => {
+              this.nurse = response.data;
+              this.validNurse = true;
+            })
+            .catch((error) => {
+              if (error.response.status == 404)
+                  alert("El enfermero no se encuentra registrado en el sistema", "warning");
+              else alert("Ocurrió un error en el servidor", "danger");
+            });
+        },
+      },
+
+      created: function () {
+        this.getHospitales();
+        this.getProcedimientos();
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
     };
-  },
-
-  methods: {
-    backLogin: function () {
-      this.$router.push({ name: "home" });
-    },
-    registro: function () {
-      console.log(this.procedimiento);
-      if (this.validPatient && this.validDoctor && this.validNurse)
-        axios
-          .post(
-            this.store.state.backURL + "/desarrollo/ingreso",
-            this.procedimiento
-          )
-          .then((result) => {
-            alert("Registro Exitoso");
-            this.backLogin();
-          })
-          .catch((error) => {
-            console.log(error.response);
-            this.result = error.response.data;
-            alert("ERROR: Fallo en el registro.");
-          });
-    },
-
-    getProcedimientos: function () {
-      axios
-        .get(this.store.state.backURL + "/procedimientos/")
-        .then((response) => {
-          this.procedimientos = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo al obtener procedimientos");
-        });
-    },
-    getHospitales: function () {
-      axios
-        .get(this.store.state.backURL + "/hospital")
-        .then((response) => {
-          this.hospitales = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo al obtener hospitales");
-        });
-    },
-
-    searchPatient: function () {
-      axios
-        .get(
-          this.store.state.backURL +
-            "/paciente/" +
-            this.procedimiento.identification_patient
-        )
-        .then((response) => {
-          this.patient = response.data;
-          this.validPatient = true;
-        })
-        .catch((error) => {
-          if (error.response.status == 404)
-            alert(
-              "El paciente ingresado no se encuentra registrado en el sistema"
-            );
-          else alert("Se presento un error al buscar el paciente");
-        });
-    },
-
-    searchDoctor: function () {
-      axios
-        .get(
-          this.store.state.backURL +
-            "/doctor/" +
-            this.procedimiento.identification_doctor
-        )
-        .then((response) => {
-          this.doctor = response.data;
-          this.validDoctor = true;
-        })
-        .catch((error) => {
-          if (error.response.status == 404)
-            alert(
-              "El doctor ingresado no se encuentra registrado en el sistema"
-            );
-          else alert("Se presento un error al buscar el doctor");
-        });
-    },
-
-    searchNurse: function () {
-      axios
-        .get(
-          this.store.state.backURL +
-            "/enfermero/" +
-            this.procedimiento.identification_nurse
-        )
-        .then((response) => {
-          this.nurse = response.data;
-          this.validNurse = true;
-        })
-        .catch((error) => {
-          if (error.response.status == 404)
-            alert(
-              "El enfermero/a ingresado no se encuentra registrado en el sistema"
-            );
-          else alert("Se presento un error al buscar el enfermero/a");
-        });
-    },
-  },
-
-  created: function () {
-    this.getHospitales();
-    this.getProcedimientos();
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
 </script>
