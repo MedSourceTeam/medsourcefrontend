@@ -1,6 +1,6 @@
 <template>
   <SideBar v-if="store.state.isAuth == true" />
-  <div :style="{'margin-left': ml }"><router-view /></div>
+  <div class="router" :style="{'margin-left': ml }"><router-view /></div>
 </template>
 
 <script>
@@ -9,6 +9,10 @@ import { sideBarWidth } from "@/components/sidebar/state";
 import { useStore } from './state';
 
 export default {
+  data: function(){
+      return{
+      }
+  },
   components: {
     SideBar,
   },

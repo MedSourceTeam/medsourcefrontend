@@ -64,44 +64,45 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
-export default {
-  name: "BusquedaProcedimiento",
-  data: function () {
-    return {
-      procedure: {
-        name: "",
-        uvr: null,
-      },
-      procedures: [],
-    };
-  },
-  methods: {
-    goBackHome: function () {
-      this.$router.push({ name: "home" });
-    },
-    getProcedimientos() {
-      axios
-        .get(this.store.state.backURL + "/procedimientos/", {
-          params: {
-            name: this.procedure.name,
-            uvr: this.procedure.uvr,
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
+    export default {
+      name: "BusquedaProcedimiento",
+      data: function () {
+        return {
+          procedure: {
+            name: "",
+            uvr: null,
           },
-        })
-        .then((response) => {
-          console.log(response.data);
-          this.procedures = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo al obtener procedimientos");
-        });
-    },
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
+          procedures: [],
+        };
+      },
+      methods: {
+        goBackHome: function () {
+          this.$router.push({ name: "home" });
+        },
+        getProcedimientos() {
+          axios
+            .get(this.store.state.backURL + "/procedimientos/", {
+              params: {
+                name: this.procedure.name,
+                uvr: this.procedure.uvr,
+              },
+            })
+            .then((response) => {
+              console.log(response.data);
+              this.procedures = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("No se pudo conectar al servidor", "danger");
+            });
+        },
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
+    };
 </script>

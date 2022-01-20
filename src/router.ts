@@ -19,6 +19,7 @@ import BusquedaAntecedente from "./views/BusquedaAntecedentes.vue";
 import BusquedaMedico from "./views/BusquedaMedicos.vue";
 import BusquedaEnfermero from "./views/BusquedaEnfermeros.vue";
 import BusquedaConsulta from "./views/BusquedaConsultas.vue";
+import EditarDesarrollo from "./views/EditarDesarrollo.vue";
 import { MutationTypes, useStore } from "./state";
 
 const routes: Array<RouteRecordRaw> = [
@@ -152,6 +153,12 @@ const routes: Array<RouteRecordRaw> = [
     name: "consultabusqueda",
     component: BusquedaConsulta,
   },
+  {
+    path: '/editarDesarrollo/:id',
+    component: EditarDesarrollo,
+    name: "editarDesarrollo",
+    props: true,
+  },
 ];
 
 const router = createRouter({
@@ -164,7 +171,6 @@ router.beforeEach((to, from, next) => {
     if (isAuth()) {
       next();
     } else {
-      alert("Usted no se encuentra autenticado. Por favor inicie sesión");
       useStore().commit(MutationTypes.LOGOUT);
       next({ name: "login" });
     }

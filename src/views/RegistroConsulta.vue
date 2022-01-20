@@ -157,114 +157,111 @@
 </template>
 
 <script>
-import axios from "axios";
-import { useStore } from '@/state';
+    import axios from "axios";
+    import { useStore } from '@/state';
+    import { alert } from "../scripts/utils.js";
 
-export default {
-  name: "RegistroConsulta",
+    export default {
+      name: "RegistroConsulta",
 
-  data: function () {
-    return {
-      doctor: null,
-      patient: null,
-      validPatient: false,
-      validDoctor: false,
-      consulta: {
-        identification_patient: null,
-        identification_doctor: null,
-        pulse: null,
-        height: null,
-        weight: null,
-        pa: null,
-        pr: null,
-        t: null,
-        medication: "",
-        symptom: "",
-        diagnosis: "",
-        id_hospital: null,
+      data: function () {
+        return {
+          doctor: null,
+          patient: null,
+          validPatient: false,
+          validDoctor: false,
+          consulta: {
+            identification_patient: null,
+            identification_doctor: null,
+            pulse: null,
+            height: null,
+            weight: null,
+            pa: null,
+            pr: null,
+            t: null,
+            medication: "",
+            symptom: "",
+            diagnosis: "",
+            id_hospital: null,
+          },
+          hospitales: [],
+        };
       },
-      hospitales: [],
+
+      methods: {
+        backLogin: function () {
+          this.$router.push({ name: "login" });
+        },
+        processSignUp: function () {
+          console.log(this.procedimiento);
+          if (this.validPatient && this.validDoctor)
+            axios
+              .post(this.store.state.backURL + "/consulta/ingreso", this.consulta)
+              .then((result) => {
+                alert("La consulta se ha registrado con éxito", "success");
+                this.backLogin();
+              })
+              .catch((error) => {
+                console.log(error.response);
+                alert("Ocurrió un error registrando la consulta", "danger");
+              });
+        },
+
+        getHospitales: function () {
+          axios
+            .get(this.store.state.backURL + "/hospital")
+            .then((response) => {
+              this.hospitales = response.data;
+            })
+            .catch((error) => {
+              console.log(error.response);
+              alert("No se pudo conectar al servidor", "danger");
+            });
+        },
+
+        searchPatient: function () {
+          axios
+            .get(
+              this.store.state.backURL +
+                "/paciente/" +
+                this.consulta.identification_patient
+            )
+            .then((response) => {
+              this.patient = response.data;
+              this.validPatient = true;
+            })
+            .catch((error) => {
+              if (error.response.status == 404)
+                alert("El paciente no se encuentra registrado en el sistema", "warning");
+              else alert("Ocurrió un error en el servidor", "danger");
+            });
+        },
+
+        searchDoctor: function () {
+          axios
+            .get(
+              this.store.state.backURL +
+                "/doctor/" +
+                this.consulta.identification_doctor
+            )
+            .then((response) => {
+              this.doctor = response.data;
+              this.validDoctor = true;
+            })
+            .catch((error) => {
+              if (error.response.status == 404)
+                alert("El médico no se encuentra registrado en el sistema", "warning");
+              else alert("Ocurrió un error en el servidor", "danger");
+            });
+        },
+      },
+
+      created: function () {
+        this.getHospitales();
+      },
+      setup() {
+        const store = useStore();
+        return { store};
+      },
     };
-  },
-
-  methods: {
-    backLogin: function () {
-      this.$router.push({ name: "login" });
-    },
-    processSignUp: function () {
-      console.log(this.procedimiento);
-      if (this.validPatient && this.validDoctor)
-        axios
-          .post(this.store.state.backURL + "/consulta/ingreso", this.consulta)
-          .then((result) => {
-            alert("Registro Exitoso");
-            this.backLogin();
-          })
-          .catch((error) => {
-            console.log(error.response);
-            alert("ERROR: Fallo en el registro.");
-          });
-    },
-
-    getHospitales: function () {
-      axios
-        .get(this.store.state.backURL + "/hospital")
-        .then((response) => {
-          this.hospitales = response.data;
-        })
-        .catch((error) => {
-          console.log(error.response);
-          alert("ERROR: Fallo al obtener hospitales");
-        });
-    },
-
-    searchPatient: function () {
-      axios
-        .get(
-          this.store.state.backURL +
-            "/paciente/" +
-            this.consulta.identification_patient
-        )
-        .then((response) => {
-          this.patient = response.data;
-          this.validPatient = true;
-        })
-        .catch((error) => {
-          if (error.response.status == 404)
-            alert(
-              "El paciente ingresado no se encuentra registrado en el sistema"
-            );
-          else alert("Se presento un error al buscar el paciente");
-        });
-    },
-
-    searchDoctor: function () {
-      axios
-        .get(
-          this.store.state.backURL +
-            "/doctor/" +
-            this.consulta.identification_doctor
-        )
-        .then((response) => {
-          this.doctor = response.data;
-          this.validDoctor = true;
-        })
-        .catch((error) => {
-          if (error.response.status == 404)
-            alert(
-              "El doctor ingresado no se encuentra registrado en el sistema"
-            );
-          else alert("Se presento un error al buscar el doctor");
-        });
-    },
-  },
-
-  created: function () {
-    this.getHospitales();
-  },
-  setup() {
-    const store = useStore();
-    return { store};
-  },
-};
 </script>
