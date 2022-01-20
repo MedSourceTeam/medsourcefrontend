@@ -1,11 +1,5 @@
 <template>
   <SideBar v-if="store.state.isAuth == true" />
-  <!-- <div
-    v-if="store.state.isAuth == true"
-    v-bind:style="{ 'margin-left': sideBarWidth }"
-  >
-    <router-view />
-  </div> -->
   <div :style="{'margin-left': ml }"><router-view /></div>
 </template>
 
