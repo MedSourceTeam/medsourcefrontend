@@ -1,19 +1,23 @@
 <template>
   <p>{{ bienvenida }}</p>
+  <donations />
 </template>
 
 <script>
 import { renewToken } from "@/services/login";
+import Donations from "@/components/Donations.vue";
+
 export default {
+  components: { Donations },
   name: "Home",
 
-  data: function () {
+  data: function() {
     return {
       bienvenida: "Bienvenid@ a MedSource",
     };
   },
 
-  created: function () {
+  created: function() {
     renewToken();
   },
 };

@@ -35,68 +35,70 @@
       </form>
       <div v-if="resultados">
         <h2>Resultados de busqueda</h2>
-        <AntecedenteListItem
-          v-for="antecedente in antecedentes"
-          :antecedente="antecedente"
-          :key="antecedente"
-        />
+        <div class="row row-cols-auto justify-content-evenly">
+          <AntecedenteListItem
+            v-for="antecedente in antecedentes"
+            :antecedente="antecedente"
+            :key="antecedente"
+          />
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-    import AntecedenteListItem from "@/components/AntecedenteListItem.vue";
-    import axios from "axios";
-    import { useStore } from '@/state';
-    import { alert } from "../scripts/utils.js";
+import AntecedenteListItem from "@/components/AntecedenteListItem.vue";
+import axios from "axios";
+import { useStore } from "@/state";
+import { alert } from "../scripts/utils.js";
 
-    export default {
-      name: "VistaAsignacionAntecedente",
+export default {
+  name: "VistaAsignacionAntecedente",
 
-      data: function () {
-        return {
-          antecedentes: [],
-          paciente_nombre: null,
-          paciente_identificacion: null,
-          antecedente_nombre: null,
-          antecedente_tipo: null,
-          antecedente_calse: null,
-          resultados: false,
-        };
-      },
-
-      components: {
-        AntecedenteListItem,
-      },
-
-      methods: {
-        buscar: async function () {
-          axios
-            .get(this.store.state.backURL + "/mostrar_antecedentes", {
-              params: {
-                patient__identification__icontains: this.paciente_identificacion,
-                patient__full_name__icontains: this.paciente_nombre,
-                record__name__icontains: this.antecedente_nombre,
-                record__kind__icontains: this.antecedente_calse,
-                record__sort__icontains: this.antecedente_tipo,
-              },
-            })
-            .then((response) => {
-              this.resultados = true;
-              this.antecedentes = response.data;
-            })
-            .catch((e) => {
-              console.log(e);
-              alert("Ocurrió un error realizando la búsqueda", "danger");
-            });
-        },
-      },
-      setup() {
-        const store = useStore();
-        return { store};
-      },
+  data: function() {
+    return {
+      antecedentes: [],
+      paciente_nombre: null,
+      paciente_identificacion: null,
+      antecedente_nombre: null,
+      antecedente_tipo: null,
+      antecedente_calse: null,
+      resultados: false,
     };
+  },
+
+  components: {
+    AntecedenteListItem,
+  },
+
+  methods: {
+    buscar: async function() {
+      axios
+        .get(this.store.state.backURL + "/mostrar_antecedentes", {
+          params: {
+            patient__identification__icontains: this.paciente_identificacion,
+            patient__full_name__icontains: this.paciente_nombre,
+            record__name__icontains: this.antecedente_nombre,
+            record__kind__icontains: this.antecedente_calse,
+            record__sort__icontains: this.antecedente_tipo,
+          },
+        })
+        .then((response) => {
+          this.resultados = true;
+          this.antecedentes = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+          alert("Ocurrió un error realizando la búsqueda", "danger");
+        });
+    },
+  },
+  setup() {
+    const store = useStore();
+    return { store };
+  },
+};
 </script>
 
 <style></style>

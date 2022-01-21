@@ -20,6 +20,9 @@ import BusquedaMedico from "./views/BusquedaMedicos.vue";
 import BusquedaEnfermero from "./views/BusquedaEnfermeros.vue";
 import BusquedaConsulta from "./views/BusquedaConsultas.vue";
 import EditarDesarrollo from "./views/EditarDesarrollo.vue";
+import EdicionAntecedente from "./views/EdicionAntecedente.vue";
+import EdicionVinculacionAntecedente from "./views/EdicionVinculacionAntecedente.vue";
+
 import { MutationTypes, useStore } from "./state";
 
 const routes: Array<RouteRecordRaw> = [
@@ -154,9 +157,21 @@ const routes: Array<RouteRecordRaw> = [
     component: BusquedaConsulta,
   },
   {
-    path: '/editarDesarrollo/:id',
+    path: "/editarDesarrollo/:id",
     component: EditarDesarrollo,
     name: "editarDesarrollo",
+    props: true,
+  },
+  {
+    path: "/editarAntecedente/:id",
+    component: EdicionAntecedente,
+    name: "editarAntecedente",
+    props: true,
+  },
+  {
+    path: "/editarVinculacionAntecedente/:id",
+    component: EdicionVinculacionAntecedente,
+    name: "editarVinculacionAntecedente",
     props: true,
   },
 ];
