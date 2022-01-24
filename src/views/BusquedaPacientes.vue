@@ -60,6 +60,7 @@
                       <th>Telefono</th>
                       <th>Estado civil</th>
                       <th>EPS</th>
+                      <th>Editar</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -88,6 +89,11 @@
                         </td>
                         <td>
                           {{ patient.eps.name }}
+                        </td>
+                        <td>
+                            <router-link :to="{ name: 'editarPaciente', params: { identification: patient.identification }}">
+                                <button type="button" class="btn btn-primary">Editar</button>
+                            </router-link>
                         </td>
                       </tr>
                     </template>

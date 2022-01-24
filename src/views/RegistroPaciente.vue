@@ -28,7 +28,6 @@
           </div>
           <div class="col-12 col-md-6 form-group text-left">
             <label for="">Fecha de Nacimiento</label>
-            <!-- validación de fecha temporal, se debe usar vuelidate -->
             <input
               class="form-control"
               required
