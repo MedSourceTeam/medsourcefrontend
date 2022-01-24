@@ -11,12 +11,14 @@ import { isAuth } from "./services/login";
 export type State = {
   backURL: string;
   isAuth: boolean;
+  loading: boolean;
 };
 
 //set state
 const state: State = {
   backURL: "http://127.0.0.1:8000",
   isAuth: isAuth(),
+  loading: false,
 };
 
 // mutations and action enums
@@ -24,12 +26,16 @@ const state: State = {
 export enum MutationTypes {
   LOGIN = "LOGIN",
   LOGOUT = "LOGOUT",
+  LOAD = "LOAD",
+  STOP = "STOP",
 }
 
 //Mutation Types
 export type Mutations<S = State> = {
   [MutationTypes.LOGIN](state: S): void;
   [MutationTypes.LOGOUT](state: S): void;
+  [MutationTypes.LOAD](state: S): void;
+  [MutationTypes.STOP](state: S): void;
 };
 
 //define mutations
@@ -39,6 +45,12 @@ const mutations: MutationTree<State> & Mutations = {
   },
   [MutationTypes.LOGOUT](state: State) {
     state.isAuth = false;
+  },
+  [MutationTypes.LOAD](state: State) {
+    state.loading = true;
+  },
+  [MutationTypes.STOP](state: State) {
+    state.loading = false;
   },
 };
 

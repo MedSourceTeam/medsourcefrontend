@@ -30,6 +30,7 @@
                       <th>id</th>
                       <th>Nombre</th>
                       <th>UVR</th>
+                      <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -37,6 +38,15 @@
                       <td>{{ procedure.id }}</td>
                       <td>{{ procedure.name }}</td>
                       <td>{{ procedure.uvr }}</td>
+                      <td>
+                        <a
+                          type="button"
+                          class="btn-floating btn-sm purple-gradient"
+                          v-on:click="editar(procedure.id)"
+                        >
+                          <i class="fas fa-edit fa-lg"></i>
+                        </a>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -64,45 +74,48 @@
 </template>
 
 <script>
-    import axios from "axios";
-    import { useStore } from '@/state';
-    import { alert } from "../scripts/utils.js";
-    export default {
-      name: "BusquedaProcedimiento",
-      data: function () {
-        return {
-          procedure: {
-            name: "",
-            uvr: null,
-          },
-          procedures: [],
-        };
+import axios from "axios";
+import { useStore } from "@/state";
+import { alert } from "../scripts/utils.js";
+export default {
+  name: "BusquedaProcedimiento",
+  data: function() {
+    return {
+      procedure: {
+        name: "",
+        uvr: null,
       },
-      methods: {
-        goBackHome: function () {
-          this.$router.push({ name: "home" });
-        },
-        getProcedimientos() {
-          axios
-            .get(this.store.state.backURL + "/procedimientos/", {
-              params: {
-                name: this.procedure.name,
-                uvr: this.procedure.uvr,
-              },
-            })
-            .then((response) => {
-              console.log(response.data);
-              this.procedures = response.data;
-            })
-            .catch((error) => {
-              console.log(error.response);
-              alert("No se pudo conectar al servidor", "danger");
-            });
-        },
-      },
-      setup() {
-        const store = useStore();
-        return { store};
-      },
+      procedures: [],
     };
+  },
+  methods: {
+    goBackHome: function() {
+      this.$router.push({ name: "home" });
+    },
+    getProcedimientos() {
+      axios
+        .get(this.store.state.backURL + "/procedimientos/", {
+          params: {
+            name: this.procedure.name,
+            uvr: this.procedure.uvr,
+          },
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.procedures = response.data;
+        })
+        .catch((error) => {
+          console.log(error.response);
+          alert("No se pudo conectar al servidor", "danger");
+        });
+    },
+    editar: function(id) {
+      this.$router.push({ name: "editarProcedimiento", params: { id: id } });
+    },
+  },
+  setup() {
+    const store = useStore();
+    return { store };
+  },
+};
 </script>

@@ -1,6 +1,10 @@
 <template>
-  <p>{{ bienvenida }}</p>
-  <donations />
+  <div class="row justify-content-evenly">
+    <p>{{ bienvenida }}</p>
+    <div class="col col-md-6 col-sm-11">
+      <donations />
+    </div>
+  </div>
 </template>
 
 <script>

@@ -1,12 +1,5 @@
 <template>
   <div class="sidebar" :style="{ width: sideBarWidth, overflow: 'scroll' }">
-    <h1>
-      <span v-if="collapsed">
-        <div>M</div>
-        <div>S</div>
-      </span>
-      <span v-else>MedSource</span>
-    </h1>
     <side-bar-link to="/home" icon="fas fa-home">Home</side-bar-link>
     <side-bar-link to="/registro/procedimiento" icon="fas fa-procedures"
       >Registrar Procedimiento</side-bar-link
@@ -50,6 +43,15 @@
     <side-bar-link to="/enfermeros" icon="fas fa-hand-holding-heart"
       >Buscar Enfermeros</side-bar-link
     >
+  </div>
+  <div class="backdiv" :style="{ width: sideBarWidth }">
+    <h1 class="nameApp">
+      <span v-if="collapsed">
+        <div>M</div>
+        <div>S</div>
+      </span>
+      <span v-else>MedSource</span>
+    </h1>
     <span class="logout" v-on:click="logout">
       <i class="fas fa-sign-out-alt"></i>
       <span v-if="!collapsed" style="margin-left: 10px">Cerrar sesión</span>
@@ -72,7 +74,7 @@
 <script>
 import { collapsed, toggleSideBar, sideBarWidth } from "./state";
 import SideBarLink from "./SideBarLink.vue";
-import { MutationTypes, useStore } from '@/state';
+import { MutationTypes, useStore } from "@/state";
 
 export default {
   name: "SideBar",
@@ -100,31 +102,55 @@ export default {
   float: left;
   position: fixed;
   z-index: 1;
-  top: 0;
+  top: calc(2.5rem + 1.5vw);
   left: 0;
-  bottom: 0;
+  bottom: 100px;
   padding: 0.5rem;
   transition: 0.3s ease;
   display: flex;
   flex-direction: column;
+  overflow: scroll;
+}
+.backdiv {
+  background-color: var(--sideBar-bg-color);
+  float: left;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  transition: 0.3s ease;
 }
 
 .collapsed-icon {
-  position: absolute;
+  position: fixed;
+  z-index: 1;
   bottom: 0;
-  padding: 0.75rem;
+  left: 0;
+  padding: 1rem;
   color: rgba(255, 255, 255, 0.7);
   transition: 0.2s linear;
   cursor: pointer;
 }
 
 .logout {
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
-  padding: 0.75rem;
+  left: 0px;
+  padding: 1rem;
   color: rgb(255, 255, 255);
   transition: 0.2s linear;
   font-weight: 400;
+  z-index: 1;
+  cursor: pointer;
+}
+.nameApp {
+  position: fixed;
+  top: 0;
+  left: 0px;
+  padding: 1rem;
+  color: rgb(255, 255, 255);
+  transition: 0.2s linear;
+  z-index: 1;
   cursor: pointer;
 }
 

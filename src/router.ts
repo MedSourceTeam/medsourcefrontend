@@ -23,6 +23,7 @@ import EditarDesarrollo from "./views/EditarDesarrollo.vue";
 import EdicionAntecedente from "./views/EdicionAntecedente.vue";
 import EdicionVinculacionAntecedente from "./views/EdicionVinculacionAntecedente.vue";
 import EditarPaciente from "./views/EditarPaciente.vue";
+import EditarProcedimiento from "./views/EditarProcedimiento.vue";
 
 import { MutationTypes, useStore } from "./state";
 
@@ -176,9 +177,15 @@ const routes: Array<RouteRecordRaw> = [
     props: true,
   },
   {
-    path: '/editarPaciente/:identification',
+    path: "/editarPaciente/:identification",
     component: EditarPaciente,
-      name: "editarPaciente",
+    name: "editarPaciente",
+    props: true,
+  },
+  {
+    path: "/editarProcedimiento/:id",
+    component: EditarProcedimiento,
+    name: "editarProcedimiento",
     props: true,
   },
 ];
