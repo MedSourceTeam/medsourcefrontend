@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import { renewToken } from "@/services/login";
 import Donations from "@/components/Donations.vue";
 
 export default {
@@ -21,9 +20,7 @@ export default {
     };
   },
 
-  created: function() {
-    renewToken();
-  },
+  created: function() {},
 };
 </script>
 

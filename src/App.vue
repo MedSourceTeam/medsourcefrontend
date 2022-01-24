@@ -6,7 +6,7 @@
   <pulse-loader
     :class="{ loader: loading }"
     :loading="loading"
-    :color="'#558eff'"
+    :color="'#336CFB'"
     :size="'100px'"
   ></pulse-loader>
 </template>
@@ -19,11 +19,12 @@ import PulseLoader from "vue-spinner/src/PulseLoader.vue";
 
 export default {
   data: function() {
-    return {
-      marginLeft: this.store.state.isAuth ? sideBarWidth : 0,
-    };
+    return {};
   },
   computed: {
+    marginLeft() {
+      return this.store.state.isAuth ? sideBarWidth.value : "0px";
+    },
     loading() {
       return this.store.state.loading;
     },
@@ -34,7 +35,7 @@ export default {
   },
   setup() {
     const store = useStore();
-    return { store, sideBarWidth };
+    return { store };
   },
 };
 </script>
@@ -54,7 +55,7 @@ export default {
 
 .loader {
   position: absolute;
-  background-color: #5252528f;
+  background-color: #0000008c;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -62,5 +63,6 @@ export default {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 2;
 }
 </style>

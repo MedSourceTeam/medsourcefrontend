@@ -71,19 +71,16 @@ export default {
 
   methods: {
     processLogin: function() {
-      this.store.commit(MutationTypes.LOAD);
       console.log(this.store.state.backURL);
       axios
         .post(this.store.state.backURL + "/login", this.user)
         .then((result) => {
-          this.store.commit(MutationTypes.STOP);
           setAuthenticationToken(result.data.access);
           setRefreshToken(result.data.refresh);
           this.store.commit(MutationTypes.LOGIN);
           this.$router.push({ name: "home" });
         })
         .catch((error) => {
-          this.store.commit(MutationTypes.STOP);
           console.log(error);
           alert("No se pudo autenticar tu cuenta", "danger");
         });

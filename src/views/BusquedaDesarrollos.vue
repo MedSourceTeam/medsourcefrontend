@@ -58,7 +58,21 @@
             v-model="desarrollo.date"
           />
         </div>
-        <div v-if="desarrollos.length != 0" class="row ml-3">
+        <button
+          type="submit"
+          class="btn m-1 btn-primary"
+          v-on:click="getProcedimientosDesarrollados"
+        >
+          Buscar desarrollos
+        </button>
+        <button
+          type="button"
+          class="btn m-1 btn-primary"
+          v-on:click="goBackHome"
+        >
+          Volver
+        </button>
+        <div v-if="desarrollos.length != 0" class="row ml-3 m-3">
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
@@ -107,20 +121,6 @@
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          class="btn m-1 btn-primary"
-          v-on:click="getProcedimientosDesarrollados"
-        >
-          Buscar desarrollos
-        </button>
-        <button
-          type="button"
-          class="btn m-1 btn-primary"
-          v-on:click="goBackHome"
-        >
-          Volver
-        </button>
       </form>
     </div>
   </div>
