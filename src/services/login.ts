@@ -1,9 +1,6 @@
 const tokenAccess = "token-access";
 const tokenRefresh = "token-refresh";
-import { store, MutationTypes } from "@/state";
-
 import axios from "axios";
-
 import jwd_decode, { JwtPayload } from "jwt-decode";
 
 export function getAuthenticationToken() {
@@ -24,7 +21,7 @@ export function setRefreshToken(token = "") {
 
 export function renewToken() {
   axios
-    .post<Token>(store.state.backURL + "/refresh", {
+    .post<Token>("http://127.0.0.1:8000/refresh", {
       refresh: getRefreshToken(),
     })
     .then((result) => {
