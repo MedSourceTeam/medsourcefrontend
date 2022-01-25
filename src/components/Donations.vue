@@ -1,6 +1,6 @@
 <template>
   <div class="card my-4" v-if="!paidFor">
-    <h4 v-if="!paidFor">
+    <h4 class="default-title" v-if="!paidFor">
       Si Deseas colaborar con este proyecto, puedes donar aquí:
       <div class="form-group text-left ">
         <currency-input

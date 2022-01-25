@@ -5,7 +5,7 @@
       style=" height:90%; width:100%"
     />
     <div class="centrado">
-      <h1>Bienvenidos a <br />Medsource</h1>
+      <h1 class="default-title">Bienvenidos a <br />Medsource</h1>
     </div>
   </div>
   <div class="row row-cols-2 justify-content-evenly" style="">
@@ -17,7 +17,7 @@
           style="width:100%"
         />
         <div class="card-body">
-          <h4><b>Meta</b></h4>
+          <h4 class="default-title"><b>Meta</b></h4>
           <h6>
             <p>
               Desarrollar una plataforma que permita llevar el almacenamiento y
@@ -36,7 +36,7 @@
           style="width:100%"
         />
         <div class="card-body">
-          <h4><b>Acerca de Medsource</b></h4>
+          <h4 class="default-title"><b>Acerca de Medsource</b></h4>
           <h6>
             <p>
               Los médicos y enfermeros podrán ingresar todos los datos
