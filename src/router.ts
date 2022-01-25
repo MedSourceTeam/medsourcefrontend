@@ -24,6 +24,7 @@ import EdicionAntecedente from "./views/EdicionAntecedente.vue";
 import EdicionVinculacionAntecedente from "./views/EdicionVinculacionAntecedente.vue";
 import EditarPaciente from "./views/EditarPaciente.vue";
 import EditarProcedimiento from "./views/EditarProcedimiento.vue";
+import Descarga from "./views/DescargaLabor.vue";
 
 import { MutationTypes, useStore } from "./state";
 
@@ -187,6 +188,11 @@ const routes: Array<RouteRecordRaw> = [
     component: EditarProcedimiento,
     name: "editarProcedimiento",
     props: true,
+  },
+  {
+    path: "/descargaLabor",
+    component: Descarga,
+    name: "DescargaLabor",
   },
 ];
 
