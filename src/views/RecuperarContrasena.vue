@@ -12,22 +12,33 @@
               v-model="user.email"
               required
             />
+            <button type="submit" class="btn btn-primary" v-if="token == null">
+              Enviar correo de recuperación
+            </button>
           </div>
-          <div class="form-group text-left" v-if="token != null">
-            <label for="">Contraseña</label>
-            <input type="password" v-model="user.password" />
+          <div v-if="token != null">
+            <div class="row row-cols-1 mt-4">
+              <div class="form-group text-left">
+                <label for="">Contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  v-model="user.password"
+                />
+              </div>
+              <div class="form-group text-left">
+                <label for="">Confirma tu contraseña</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  v-model="password"
+                />
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+              Cambiar contraseña
+            </button>
           </div>
-          <div class="form-group text-left" v-if="token != null">
-            <label for="">Confirma tu contraseña</label>
-            <input type="password" v-model="password" />
-          </div>
-
-          <button type="submit" class="btn btn-primary" v-if="token == null">
-            Enviar correo de recuperación
-          </button>
-          <button type="submit" class="btn btn-primary" v-if="token != null">
-            Cambiar contraseña
-          </button>
         </form>
       </div>
     </div>
@@ -35,88 +46,100 @@
 </template>
 
 <script>
-    import axios from "axios";
-    import { MutationTypes, useStore } from '@/state';
-    import { alert } from "../scripts/utils.js";
+import axios from "axios";
+import { MutationTypes, useStore } from "@/state";
+import { alert } from "../scripts/utils.js";
 
-    export default {
-      name: "RecuperarContrasena",
+export default {
+  name: "RecuperarContrasena",
 
-      data: function () {
-        return {
-          user: {
-            email: "",
-            password: "",
-          },
-          password: "",
-          token: null,
-        };
+  data: function() {
+    return {
+      user: {
+        email: "",
+        password: "",
       },
-
-      methods: {
-        sendMail: function () {
-          axios
-            .post(
-              this.store.state.backURL + "/reestablecer_contrasena/email",
-              this.user
-            )
-            .then((result) => {
-              if (result.data.exitoso) this.$router.push({ name: "login" });
-              else alert("Ocurrió un error enviando el email de recuperación de contraseña", "danger");
-            })
-            .catch((error) => {
-              console.log(error);
-              alert("Ocurrió un error enviando el email de recuperación de contraseña", "danger");
-            });
-        },
-
-        changePassword: function () {
-          axios
-            .put(
-              this.store.state.backURL + "/reestablecer_contrasena/" + this.token,
-              this.user
-            )
-            .then((result) => {
-              if (result.data.exitoso) this.$router.push({ name: "login" });
-              else alert("Ocurrió un error reestableciendo tu contraseña", "danger");
-            })
-            .catch((error) => {
-              console.log(error);
-              alert("Ocurrió un error reestableciendo tu contraseña", "danger");
-            });
-        },
-
-        processChange: function () {
-          if (this.token != null) {
-            if (this.password == this.user.password) this.changePassword();
-            else alert("La contraseña ingresada debe coincidir en ambos campos", "warning");
-          } else this.sendMail();
-        },
-
-        validateToken: function () {
-          axios
-            .get(
-              this.store.state.backURL + "/reestablecer_contrasena/" + this.token
-            )
-            .then((result) => {
-              if (!result.data.exitoso) this.$router.push({ name: "login" });
-            })
-            .catch((error) => {
-              console.log(error);
-              this.$router.push({ name: "login" });
-            });
-        },
-      },
-
-      created: function () {
-        if (this.$route.params.hasOwnProperty("token")) {
-          this.token = this.$route.params.token;
-          this.validateToken();
-        }
-      },
-      setup() {
-        const store = useStore();
-        return { store };
-      },
+      password: "",
+      token: null,
     };
+  },
+
+  methods: {
+    sendMail: function() {
+      axios
+        .post(
+          this.store.state.backURL + "/reestablecer_contrasena/email",
+          this.user
+        )
+        .then((result) => {
+          if (result.data.exitoso) this.$router.push({ name: "login" });
+          else
+            alert(
+              "Ocurrió un error enviando el email de recuperación de contraseña",
+              "danger"
+            );
+        })
+        .catch((error) => {
+          console.log(error);
+          alert(
+            "Ocurrió un error enviando el email de recuperación de contraseña",
+            "danger"
+          );
+        });
+    },
+
+    changePassword: function() {
+      axios
+        .put(
+          this.store.state.backURL + "/reestablecer_contrasena/" + this.token,
+          this.user
+        )
+        .then((result) => {
+          if (result.data.exitoso) this.$router.push({ name: "login" });
+          else
+            alert("Ocurrió un error reestableciendo tu contraseña", "danger");
+        })
+        .catch((error) => {
+          console.log(error);
+          alert("Ocurrió un error reestableciendo tu contraseña", "danger");
+        });
+    },
+
+    processChange: function() {
+      if (this.token != null) {
+        if (this.password == this.user.password) this.changePassword();
+        else
+          alert(
+            "La contraseña ingresada debe coincidir en ambos campos",
+            "warning"
+          );
+      } else this.sendMail();
+    },
+
+    validateToken: function() {
+      axios
+        .get(
+          this.store.state.backURL + "/reestablecer_contrasena/" + this.token
+        )
+        .then((result) => {
+          if (!result.data.exitoso) this.$router.push({ name: "login" });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.$router.push({ name: "login" });
+        });
+    },
+  },
+
+  created: function() {
+    if (this.$route.params.hasOwnProperty("token")) {
+      this.token = this.$route.params.token;
+      this.validateToken();
+    }
+  },
+  setup() {
+    const store = useStore();
+    return { store };
+  },
+};
 </script>
