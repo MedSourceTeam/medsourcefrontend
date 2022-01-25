@@ -43,6 +43,9 @@
     <side-bar-link to="/enfermeros" icon="fas fa-hand-holding-heart"
       >Buscar Enfermeros</side-bar-link
     >
+    <side-bar-link to="/descargaLabor" icon="far fa-address-book"
+      >Descarga Labor</side-bar-link
+    >
   </div>
   <div class="backdiv" :style="{ width: sideBarWidth }">
     <h1 class="nameApp">

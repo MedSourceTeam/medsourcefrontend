@@ -1,25 +1,25 @@
 <template>
-  <h2 v-if="!paidFor">
-    Si Deseas colaborar con este proyecto, puedes donar aquí:
-  </h2>
-  <div v-if="!paidFor">
-    <div class="form-group text-left ">
-      <currency-input
-        class="form-control"
-        v-model="value"
-        :options="{ currency: 'USD', locale: 'en-US' }"
-      />
+  <div class=card v-if="!paidFor" >
+    <h4 v-if="!paidFor">
+      Si Deseas colaborar con este proyecto, puedes donar aquí:
+      <div class="form-group text-left ">
+        <currency-input
+          class="form-control"
+          v-model="value"
+          :options="{ currency: 'USD', locale: 'en-US' }"
+        />
+      </div>
+    </h4>
+  </div>
+    <div v-if="paidFor">
+      <h1>Muchas gracias por apoyarnos.</h1>
+      <button class="btn btn-primary" v-on:click="reset()">
+        Donar Nuevamente
+      </button>
     </div>
-  </div>
+    <div v-if="!paidFor" ref="paypal"></div>
 
-  <div v-if="paidFor">
-    <h1>Muchas gracias por apoyarnos.</h1>
-    <button class="btn btn-primary" v-on:click="reset()">
-      Donar Nuevamente
-    </button>
-  </div>
-
-  <div v-if="!paidFor" ref="paypal"></div>
+  
 </template>
 
 <script>
