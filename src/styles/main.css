@@ -46,7 +46,9 @@
     --sideBar-item-active: var(--blue-dark);
 
     background-color: var(--background);
+
 }
+
 body{
     background-color: var(--background)!important;
 }
@@ -57,4 +59,17 @@ body{
 
 #AlertDiv {
     display: none;
+}
+.contenedor{
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+ 
+
+.centrado{
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    transform: translate(-50%, -50%);
 }
