@@ -46,7 +46,7 @@
         <button type="button" class="btn btn-primary" v-on:click="goBackHome">
           Volver
         </button>
-        <div v-if="patients.length != 0" class="row ml-3 mt-3">
+        <div v-if="patients.length != 0" class="row ml-3 mt-3 " >
           <div class="card">
             <div class="card-body">
               <div class="table-responsive">
