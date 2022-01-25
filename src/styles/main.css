@@ -65,8 +65,8 @@ body {
 }
 
 .centrado {
-  position: relative;
-  top: 20%;
-  left: 30%;
+  position: absolute;
+  top: 50%;
+  left: 20%;
   transform: translate(-50%, -50%);
 }

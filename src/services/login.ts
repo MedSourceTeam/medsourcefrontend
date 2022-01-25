@@ -1,5 +1,6 @@
 const tokenAccess = "token-access";
 const tokenRefresh = "token-refresh";
+import { useStore, MutationTypes } from "@/state";
 
 import axios from "axios";
 
@@ -23,7 +24,7 @@ export function setRefreshToken(token = "") {
 
 export function renewToken() {
   axios
-    .post<Token>("http://127.0.0.1:8000/refresh", {
+    .post<Token>(useStore().state.backURL + "/refresh", {
       refresh: getRefreshToken(),
     })
     .then((result) => {

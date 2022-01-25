@@ -1,5 +1,5 @@
 <template>
-  <div class=card v-if="!paidFor" >
+  <div class="card my-4" v-if="!paidFor">
     <h4 v-if="!paidFor">
       Si Deseas colaborar con este proyecto, puedes donar aquí:
       <div class="form-group text-left ">
@@ -10,7 +10,6 @@
         />
       </div>
     </h4>
-  </div>
     <div v-if="paidFor">
       <h1>Muchas gracias por apoyarnos.</h1>
       <button class="btn btn-primary" v-on:click="reset()">
@@ -18,8 +17,7 @@
       </button>
     </div>
     <div v-if="!paidFor" ref="paypal"></div>
-
-  
+  </div>
 </template>
 
 <script>

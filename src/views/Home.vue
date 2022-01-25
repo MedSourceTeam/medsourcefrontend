@@ -1,24 +1,22 @@
 <template>
-  <div class="row">
-    <div class="container">
-      <img
-        src="../assets/images/home_image.jpg"
-        style=" height:90%; width:100%"
-      />
-      <div class="centrado">
-        <h1>Bienvenidos a <br />Medsource</h1>
-      </div>
+  <div class="contenedor">
+    <img
+      src="../assets/images/home_image.jpg"
+      style=" height:90%; width:100%"
+    />
+    <div class="centrado">
+      <h1>Bienvenidos a <br />Medsource</h1>
     </div>
   </div>
-  <div class="row" style="margin: -150px 0px">
-    <div class="column" style="float: left; width: 33%; padding: 0 0px;">
-      <div class="card" style="height:400px">
+  <div class="row row-cols-2 justify-content-evenly" style="">
+    <div class="col-11 col-md-5 my-3">
+      <div class="card">
         <img
           src="../assets/images/doctor_1.jpg"
           alt="Avatar"
           style="width:100%"
         />
-        <div class="container">
+        <div class="card-body">
           <h4><b>Meta</b></h4>
           <h6>
             <p>
@@ -30,14 +28,14 @@
         </div>
       </div>
     </div>
-    <div class="column" style="float: left; width: 33%; padding: 0 0px;">
-      <div class="card" style="height:400px">
+    <div class="col-11 col-md-5 my-3">
+      <div class="card">
         <img
           src="../assets/images/doctor_1.jpg"
           alt="Avatar"
           style="width:100%"
         />
-        <div class="container">
+        <div class="card-body">
           <h4><b>Acerca de Medsource</b></h4>
           <h6>
             <p>
@@ -50,7 +48,7 @@
         </div>
       </div>
     </div>
-    <div class="column" style="float: left; width: 34%; padding: 0 0px;">
+    <div class="col-11">
       <donations />
     </div>
   </div>

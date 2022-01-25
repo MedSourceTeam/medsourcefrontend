@@ -15,7 +15,7 @@ axios.interceptors.request.use(
   (request) => {
     if (
       request.url?.startsWith(store.state.backURL) &&
-      request.url !== "http://127.0.0.1:8000/refresh" &&
+      request.url !== store.state.backURL + "/refresh" &&
       isAuth() &&
       request.headers
     ) {
