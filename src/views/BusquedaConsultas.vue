@@ -45,6 +45,7 @@
                                                 <th>Medicacion</th>
                                                 <th>Sintomas</th>
                                                 <th>Diagnostico</th>
+                                                <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,6 +90,15 @@
                                                     </td>
                                                     <td>
                                                         {{ consultation.diagnosis }}
+                                                    </td>
+                                                    <td>
+                                                        <a
+                                                        type="button"
+                                                        class="btn-floating btn-sm purple-gradient"
+                                                        v-on:click="editar(consultation.id)"
+                                                        >
+                                                        <i class="fas fa-edit fa-lg"></i>
+                                                        </a>
                                                     </td>
                                                 </tr>
                                             </template>
@@ -151,6 +161,9 @@
                 alert("No se obtuvieron resultados para tu búsqueda", "warning");
               else alert("Ocurrió un error en el servidor", "danger");
             });
+        },
+        editar: function(id) {
+            this.$router.push({ name: "editarConsulta", params: { id: id } });
         },
       },
       setup() {
