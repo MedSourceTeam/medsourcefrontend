@@ -21,7 +21,7 @@ export function setRefreshToken(token = "") {
 
 export function renewToken() {
   axios
-    .post<Token>("http://127.0.0.1:8000/refresh", {
+    .post<Token>("https://med-source.herokuapp.com//refresh", {
       refresh: getRefreshToken(),
     })
     .then((result) => {
