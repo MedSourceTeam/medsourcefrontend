@@ -41,9 +41,10 @@
         <router-link to="recuperarContrasena" class="link-primary">
           ¿Olvidaste tu contraseña?
         </router-link>
+        <br />
         <router-link :to="{ name: 'medicoregistro' }" class="link-primary">
-          Regístrate aquí si eres un médico
-        </router-link>
+          Regístrate aquí si eres un médico </router-link
+        ><br />
         <router-link :to="{ name: 'enfermeroregistro' }" class="link-primary">
           Regístrate aquí si eres un enfermero
         </router-link>
