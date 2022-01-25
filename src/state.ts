@@ -16,7 +16,7 @@ export type State = {
 
 //set state
 const state: State = {
-  backURL: "https://med-source.herokuapp.com/",
+  backURL: "https://med-source.herokuapp.com",
   isAuth: isAuth(),
   loading: false,
 };
